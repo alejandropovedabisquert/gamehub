@@ -24,7 +24,7 @@ export class GameService {
     // TODO: Implement filtering logic
     if (filters?.nextPage) {
       // Apply pagination or other filters
-      console.log('Fetching games with filters:', filters?.nextPage);
+      // console.log('Fetching games with filters:', filters?.nextPage);
       return this.http.get<Game>(filters.nextPage);
     }
 
