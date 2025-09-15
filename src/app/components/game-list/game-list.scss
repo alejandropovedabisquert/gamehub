@@ -1,0 +1,29 @@
+.game-list {
+  flex-grow: 1;
+  padding: 16px;
+  border-left: 1px solid #eee;
+  .game-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    .game-card{
+        border: 1px solid #eee;
+        border-radius: 4px;
+        overflow: hidden;
+        max-width: 25%;
+        img {
+            width: 100%;
+            height: auto;
+        }
+        p {
+            padding: 8px;
+            text-align: center;
+        }
+    }
+  }
+}
+#load-more {
+  height: 20px;
+  width: 100%;
+  background-color: red;
+}

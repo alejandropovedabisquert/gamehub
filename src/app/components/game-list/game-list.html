@@ -1,0 +1,14 @@
+<div class="game-list">
+    <h2>Game List</h2>
+    <div class="game-cards">
+        @for (game of (results$ | async); track game.id) {
+        <div class="game-card">
+            <img src="{{ game.background_image }}" alt="">
+            <p>{{ game.name }}</p>
+        </div>
+        } @empty {
+        <p>There are no items.</p>
+        }
+    </div>
+</div>
+<div id="load-more" #observableGameList></div>

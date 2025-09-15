@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { SidebarFilters } from './components/sidebar-filters/sidebar-filters';
+import { GameList } from "./components/game-list/game-list";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [SidebarFilters, GameList],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
 })
 export class App {
   protected title = 'gamehub';

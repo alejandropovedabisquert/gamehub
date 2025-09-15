@@ -1,0 +1,39 @@
+<div>
+    <form [formGroup]="filtersForm">
+        <input id="search" type="text" formControlName="search" placeholder="Search games..." />
+
+        <h3>Genres</h3>
+        <div class="genres" formGroupName="genres">
+            @for (genre of (genres$ | async)?.results; track genre.id; let i = $index) {
+                <div>
+                    <input 
+                        type="checkbox" 
+                        [id]="'genre-' + genre.slug"
+                        [formControlName]="genre.slug"
+                    />
+                    <label [for]="'genre-' + genre.slug">{{ genre.name }}</label>
+                </div>
+            } @empty {
+                <p>There are no genres available.</p>
+            }
+        </div>
+        
+        ---
+
+        <h3>Platforms</h3>
+        <div class="platforms" formGroupName="platforms">
+            @for (platform of (platforms$ | async)?.results; track platform.id; let i = $index) {
+                <div>
+                    <input 
+                        type="checkbox" 
+                        [id]="'platform-' + platform.slug" 
+                        [formControlName]="platform.slug" 
+                    />
+                    <label [for]="'platform-' + platform.slug">{{ platform.name }}</label>
+                </div>
+            } @empty {
+                <p>There are no platforms available.</p>
+            }
+        </div>
+    </form>
+</div>
