@@ -1,0 +1,4 @@
+<div class="game-container">
+    <app-sidebar-filters (filtersChanged)="onFiltersChanged($event)"></app-sidebar-filters>
+    <app-game-list [filters]="filters"></app-game-list>
+</div>    

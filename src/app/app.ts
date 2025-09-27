@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { SidebarFilters } from './components/sidebar-filters/sidebar-filters';
-import { GameList } from "./components/game-list/game-list";
+import { RouterOutlet } from '@angular/router';
+import { Header } from "./components/common/header/header";
+import { Footer } from './components/common/footer/footer';
 
 @Component({
   selector: 'app-root',
-  imports: [SidebarFilters, GameList],
+  imports: [RouterOutlet, Header, Footer],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })

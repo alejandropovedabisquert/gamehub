@@ -26,10 +26,10 @@
                 <div>
                     <input 
                         type="checkbox" 
-                        [id]="'platform-' + platform.slug" 
-                        [formControlName]="platform.slug" 
+                        [id]="'platform-' + platform.id" 
+                        [formControlName]="platform.id" 
                     />
-                    <label [for]="'platform-' + platform.slug">{{ platform.name }}</label>
+                    <label [for]="'platform-' + platform.id">{{ platform.name }}</label>
                 </div>
             } @empty {
                 <p>There are no platforms available.</p>

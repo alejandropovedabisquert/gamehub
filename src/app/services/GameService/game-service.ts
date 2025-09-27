@@ -1,12 +1,14 @@
 import { inject, Injectable } from '@angular/core';
 import { Genre } from '../../interfaces/genre';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Platform } from '../../interfaces/platform';
 import { Observable } from 'rxjs';
 import { Game } from '../../interfaces/game';
+import { GameDetail } from '../../components/game-detail/game-detail';
+import { GameDetailInterface } from '../../interfaces/game-detail';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GameService {
   private apiKey = process.env.NG_APP_API_KEY;
@@ -17,18 +19,53 @@ export class GameService {
     return this.http.get<Genre>(`${this.baseUrl}/genres?key=${this.apiKey}`);
   }
   getPlatforms(): Observable<Platform> {
-    return this.http.get<Platform>(`${this.baseUrl}/platforms?key=${this.apiKey}`);
+    return this.http.get<Platform>(
+      `${this.baseUrl}/platforms?key=${this.apiKey}`
+    );
   }
-
+  // eslint-disable-next-line
   getGames(filters?: any): Observable<Game> {
-    // TODO: Implement filtering logic
+    // When filters are provided, construct the query parameters
+    // console.log('getGames called without filters:', filters);
     if (filters?.nextPage) {
-      // Apply pagination or other filters
-      // console.log('Fetching games with filters:', filters?.nextPage);
       return this.http.get<Game>(filters.nextPage);
     }
+    let params = new HttpParams().set('key', this.apiKey ?? '');
+    if (filters) {
+      Object.keys(filters).forEach((key) => {
+        if (
+          filters[key] !== undefined &&
+          filters[key] !== null &&
+          key !== 'nextPage'
+        ) {
+          params = params.set(key, filters[key]);
+        }
+      });
+    }
 
-    return this.http.get<Game>(`${this.baseUrl}/games?key=${this.apiKey}`);
+    const url = `${this.baseUrl}/games`;
+    // console.log('Fetching games:', url + '?' + params.toString());
+    return this.http.get<Game>(url, { params });
   }
 
+  getGameDetails(slug: string): Observable<GameDetailInterface> {
+    return this.http.get<GameDetailInterface>(
+      `${this.baseUrl}/games/${slug}?key=${this.apiKey}`
+    );
+  }
+
+  // eslint-disable-next-line
+  getGameScreenshots(slug: string): Observable<any> {
+    // eslint-disable-next-line
+    return this.http.get<any>(
+      `${this.baseUrl}/games/${slug}/screenshots?key=${this.apiKey}`
+    );
+  }
+  // eslint-disable-next-line
+  getGameTrailers(slug: string): Observable<any> {
+    // eslint-disable-next-line
+    return this.http.get<any>(
+      `${this.baseUrl}/games/${slug}/movies?key=${this.apiKey}`
+    );
+  }
 }
