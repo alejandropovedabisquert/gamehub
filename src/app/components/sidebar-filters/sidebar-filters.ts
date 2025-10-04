@@ -26,6 +26,7 @@ export class SidebarFilters implements OnInit {
   private fb: FormBuilder = inject(FormBuilder);
   private gameService: GameService = inject(GameService);
   private cdr = inject(ChangeDetectorRef);
+  private firstValueChange = true;
   filtersForm: FormGroup;
   genres$!: Observable<Genre>;
   platforms$!: Observable<Platform>;
@@ -65,6 +66,10 @@ export class SidebarFilters implements OnInit {
     this.filtersForm.valueChanges
       .pipe(debounceTime(500), distinctUntilChanged())
       .subscribe((formValue) => {
+        if (this.firstValueChange) {
+          this.firstValueChange = false;
+          return; // Ignora el primer valueChanges (vacío)
+        }
         const processedFilters = this.processFilters(formValue);
         this.filtersChanged.emit(processedFilters);
       });

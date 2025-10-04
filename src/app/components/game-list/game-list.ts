@@ -30,6 +30,9 @@ export class GameList implements AfterViewInit, OnDestroy, OnChanges {
   private resultsSubject = new BehaviorSubject<any[]>([]);
   private cdr = inject(ChangeDetectorRef);
   private intersectionObserver: IntersectionObserver | undefined;
+  // eslint-disable-next-line
+  private filtersTimeout: any;
+  private firstValueChange = true;
 
   gameService: GameService = inject(GameService);
   results$ = this.resultsSubject.asObservable();
@@ -50,9 +53,14 @@ export class GameList implements AfterViewInit, OnDestroy, OnChanges {
             if (!nextPage) {
               return;
             }
+            if (this.filtersTimeout) {
+              clearTimeout(this.filtersTimeout);
+            }
             this.isLoadingMore = true;
             this.cdr.detectChanges();
-            this.loadMoreGames({ nextPage });
+            this.filtersTimeout = setTimeout(() => {
+              this.loadMoreGames({ nextPage });
+            }, 1000);
           }
         });
       },
@@ -68,16 +76,23 @@ export class GameList implements AfterViewInit, OnDestroy, OnChanges {
     }
   }
 
-  // TODO: Optimizar para evitar llamadas innecesarias / que no llame dos veces al iniciar
-  // TODO: Darle un timeout para que no llame muchas veces seguidas
   ngOnChanges(changes: SimpleChanges) {
+    if (this.firstValueChange) {
+      this.firstValueChange = false;
+      return; // Ignora el primer valueChanges (vacío)
+    }
     if (changes['filters']) {
       const prev = changes['filters'].previousValue;
       const curr = changes['filters'].currentValue;
-      if (curr && Object.keys(curr).length > 0 && JSON.stringify(prev) !== JSON.stringify(curr)) {
+      if (
+        curr &&
+        Object.keys(curr).length > 0 &&
+        JSON.stringify(prev) !== JSON.stringify(curr)
+      ) {
         // Reinicia la lista y carga juegos con los nuevos filtros
         this.resultsSubject.next([]);
         this.next = null;
+
         this.loadMoreGames(curr);
       } else if (!curr || Object.keys(curr).length === 0) {
         // Si los filtros están vacíos, reinicia la lista y carga sin filtros
@@ -86,12 +101,12 @@ export class GameList implements AfterViewInit, OnDestroy, OnChanges {
         this.loadMoreGames();
       }
     }
-  } 
+  }
 
   // eslint-disable-next-line
   private loadMoreGames(filters?: any) {
     this.gameService.getGames(filters).subscribe((games) => {
-      const current = this.resultsSubject.value;      
+      const current = this.resultsSubject.value;
       this.resultsSubject.next([...current, ...games.results]);
       this.next = games.next;
       this.isLoading = false;
