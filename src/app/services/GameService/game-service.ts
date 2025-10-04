@@ -4,7 +4,6 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Platform } from '../../interfaces/platform';
 import { Observable } from 'rxjs';
 import { Game } from '../../interfaces/game';
-import { GameDetail } from '../../components/game-detail/game-detail';
 import { GameDetailInterface } from '../../interfaces/game-detail';
 
 @Injectable({

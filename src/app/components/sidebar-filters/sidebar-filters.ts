@@ -29,7 +29,7 @@ export class SidebarFilters implements OnInit {
   filtersForm: FormGroup;
   genres$!: Observable<Genre>;
   platforms$!: Observable<Platform>;
-
+  // TODO: Cuando seleccione algun filtro hacer un to top
   constructor() {
     // Inicializa el formulario con FormBuilder
     this.filtersForm = this.fb.group({

@@ -35,6 +35,7 @@ export class GameList implements AfterViewInit, OnDestroy, OnChanges {
   results$ = this.resultsSubject.asObservable();
   next: string | null = null;
   isLoading = true;
+  isLoadingMore = false;
 
   // Carga inicial de juegos y configuración del IntersectionObserver
   ngAfterViewInit() {
@@ -49,6 +50,8 @@ export class GameList implements AfterViewInit, OnDestroy, OnChanges {
             if (!nextPage) {
               return;
             }
+            this.isLoadingMore = true;
+            this.cdr.detectChanges();
             this.loadMoreGames({ nextPage });
           }
         });
@@ -66,6 +69,7 @@ export class GameList implements AfterViewInit, OnDestroy, OnChanges {
   }
 
   // TODO: Optimizar para evitar llamadas innecesarias / que no llame dos veces al iniciar
+  // TODO: Darle un timeout para que no llame muchas veces seguidas
   ngOnChanges(changes: SimpleChanges) {
     if (changes['filters']) {
       const prev = changes['filters'].previousValue;
@@ -74,13 +78,11 @@ export class GameList implements AfterViewInit, OnDestroy, OnChanges {
         // Reinicia la lista y carga juegos con los nuevos filtros
         this.resultsSubject.next([]);
         this.next = null;
-        this.isLoading = true;
         this.loadMoreGames(curr);
       } else if (!curr || Object.keys(curr).length === 0) {
         // Si los filtros están vacíos, reinicia la lista y carga sin filtros
         this.resultsSubject.next([]);
         this.next = null;
-        this.isLoading = true;
         this.loadMoreGames();
       }
     }
@@ -93,6 +95,7 @@ export class GameList implements AfterViewInit, OnDestroy, OnChanges {
       this.resultsSubject.next([...current, ...games.results]);
       this.next = games.next;
       this.isLoading = false;
+      this.isLoadingMore = false;
       this.cdr.detectChanges();
     });
   }

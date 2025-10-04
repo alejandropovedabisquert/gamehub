@@ -16,13 +16,15 @@ export class GameDetail implements OnInit {
   private gameService: GameService = inject(GameService);
   route: ActivatedRoute = inject(ActivatedRoute);
   gameDetails$!: Observable<GameDetailInterface>;
-
+  isLoading = true;
+  
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const slug = params['slug'];
       this.gameService.getGameDetails(slug).subscribe((gameDetails: GameDetailInterface) => {
         this.gameDetails$ = of(gameDetails);
-        console.log(gameDetails);
+        this.isLoading = false;
+        // console.log(gameDetails);
         this.cdr.detectChanges();
       });
     });
