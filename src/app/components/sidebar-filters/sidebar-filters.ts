@@ -5,19 +5,18 @@ import {
   Output,
   EventEmitter,
   inject,
-  ChangeDetectorRef,
 } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { GameService } from '../../services/GameService/game-service';
 import { Genre } from '../../interfaces/genre';
 import { Platform } from '../../interfaces/platform';
-import { Observable, of } from 'rxjs';
-import { CommonModule } from '@angular/common';
+import { Observable } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 @Component({
   selector: 'app-sidebar-filters',
   templateUrl: './sidebar-filters.html',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [AsyncPipe, ReactiveFormsModule],
   styleUrls: ['./sidebar-filters.scss'],
 })
 export class SidebarFilters implements OnInit {
@@ -25,12 +24,12 @@ export class SidebarFilters implements OnInit {
   @Output() filtersChanged = new EventEmitter<any>();
   private fb: FormBuilder = inject(FormBuilder);
   private gameService: GameService = inject(GameService);
-  private cdr = inject(ChangeDetectorRef);
   private firstValueChange = true;
   filtersForm: FormGroup;
   genres$!: Observable<Genre>;
   platforms$!: Observable<Platform>;
   // TODO: Cuando seleccione algun filtro hacer un to top
+  // TODO: Arreglar bug NG0100: ExpressionChangedAfterItHasBeenCheckedError
   constructor() {
     // Inicializa el formulario con FormBuilder
     this.filtersForm = this.fb.group({
@@ -38,28 +37,27 @@ export class SidebarFilters implements OnInit {
       genres: this.fb.group({}), // Crea un FormGroup para géneros
       platforms: this.fb.group({}), // Crea otro para plataformas
     });
+    this.genres$ = new Observable<Genre>();
+    this.platforms$ = new Observable<Platform>();
   }
 
   ngOnInit(): void {
-    // Obtiene los géneros del servicio
-    this.gameService.getGenres().subscribe((genres: Genre) => {
-      this.genres$ = of(genres);
+    this.genres$ = this.gameService.getGenres();
+    // Cuando los géneros estén disponibles, agrega controles al formulario
+    this.genres$.subscribe((genres: Genre) => {
       // Por cada género, agrega un nuevo control al FormGroup de géneros
       const genresGroup = this.filtersForm.get('genres') as FormGroup;
       genres.results.forEach((genre) => {
         genresGroup.addControl(genre.slug, this.fb.control(false));
       });
-      this.cdr.detectChanges();
     });
 
-    // Hacemos lo mismo para las plataformas
-    this.gameService.getPlatforms().subscribe((platforms: Platform) => {
-      this.platforms$ = of(platforms);
+    this.platforms$ = this.gameService.getPlatforms();
+    this.platforms$.subscribe((platforms: Platform) => {
       const platformsGroup = this.filtersForm.get('platforms') as FormGroup;
       platforms.results.forEach((platform) => {
         platformsGroup.addControl(String(platform.id), this.fb.control(false));
       });
-      this.cdr.detectChanges();
     });
 
     // Escucha los cambios en el formulario y emite los filtros procesados

@@ -4,17 +4,22 @@
 
         <h3>Genres</h3>
         <div class="genres" formGroupName="genres">
-            @for (genre of (genres$ | async)?.results; track genre.id; let i = $index) {
-                <div>
-                    <input 
+            @if(genres$ | async; as genres) {
+                @for (genre of genres.results; track genre.id;) {
+                    <div>
+                        <input 
                         type="checkbox" 
                         [id]="'genre-' + genre.slug"
                         [formControlName]="genre.slug"
-                    />
-                    <label [for]="'genre-' + genre.slug">{{ genre.name }}</label>
-                </div>
-            } @empty {
-                <p>There are no genres available.</p>
+                        />
+                        <label [for]="'genre-' + genre.slug">{{ genre.name }}</label>
+                    </div>
+                } @empty {
+                    <p>There are no genres available.</p>
+                }
+            } 
+            @else {
+                <p>Loading genres...</p>
             }
         </div>
         
@@ -22,17 +27,22 @@
 
         <h3>Platforms</h3>
         <div class="platforms" formGroupName="platforms">
-            @for (platform of (platforms$ | async)?.results; track platform.id; let i = $index) {
-                <div>
-                    <input 
-                        type="checkbox" 
-                        [id]="'platform-' + platform.id" 
-                        [formControlName]="platform.id" 
-                    />
-                    <label [for]="'platform-' + platform.id">{{ platform.name }}</label>
-                </div>
-            } @empty {
-                <p>There are no platforms available.</p>
+            @if(platforms$ | async; as platforms) {
+                @for (platform of platforms.results; track platform.id; let i = $index) {
+                    <div>
+                        <input 
+                            type="checkbox" 
+                            [id]="'platform-' + platform.id" 
+                            [formControlName]="platform.id" 
+                        />
+                        <label [for]="'platform-' + platform.id">{{ platform.name }}</label>
+                    </div>
+                } @empty {
+                    <p>There are no platforms available.</p>
+                }
+            } 
+            @else {
+                <p>Loading platforms...</p>
             }
         </div>
     </form>

@@ -10,36 +10,39 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { GameService } from '../../services/GameService/game-service';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { Game, GameResult } from '../../interfaces/game';
 
 @Component({
   selector: 'app-game-list',
-  imports: [CommonModule, RouterLink],
+  imports: [AsyncPipe, RouterLink],
   templateUrl: './game-list.html',
   styleUrl: './game-list.scss',
   standalone: true,
 })
-// TODO: Rehacer forma de obtener los datos de los juegos, imitar a como hace game-screenshots
 export class GameList implements AfterViewInit, OnDestroy, OnChanges {
   @ViewChild('observableGameList') observableGameList!: ElementRef;
   // eslint-disable-next-line
   @Input() filters: any;
-  // eslint-disable-next-line
-  private resultsSubject = new BehaviorSubject<any[]>([]);
+  private gameService: GameService = inject(GameService);
   private cdr = inject(ChangeDetectorRef);
   private intersectionObserver: IntersectionObserver | undefined;
   // eslint-disable-next-line
   private filtersTimeout: any;
   private firstValueChange = true;
+  private next: string | null = null;
+  private resultsSubject = new BehaviorSubject<GameResult[]>([]);
+  private gameResults$!: Observable<Game>;
+  private isLoadingMoreSubject = new BehaviorSubject<boolean>(false);
+  currentResults$ = this.resultsSubject.asObservable();
+  isLoadingMore$ = this.isLoadingMoreSubject.asObservable();
 
-  gameService: GameService = inject(GameService);
-  results$ = this.resultsSubject.asObservable();
-  next: string | null = null;
-  isLoading = true;
-  isLoadingMore = false;
+  constructor() {
+    this.gameResults$ = new Observable<Game>();
+  }
 
   // Carga inicial de juegos y configuración del IntersectionObserver
   ngAfterViewInit() {
@@ -57,8 +60,7 @@ export class GameList implements AfterViewInit, OnDestroy, OnChanges {
             if (this.filtersTimeout) {
               clearTimeout(this.filtersTimeout);
             }
-            this.isLoadingMore = true;
-            this.cdr.detectChanges();
+            this.isLoadingMoreSubject.next(true);
             this.filtersTimeout = setTimeout(() => {
               this.loadMoreGames({ nextPage });
             }, 1000);
@@ -106,13 +108,12 @@ export class GameList implements AfterViewInit, OnDestroy, OnChanges {
 
   // eslint-disable-next-line
   private loadMoreGames(filters?: any) {
-    this.gameService.getGames(filters).subscribe((games) => {
+    this.gameResults$ = this.gameService.getGames(filters);
+    this.gameResults$.subscribe((games: Game) => {
       const current = this.resultsSubject.value;
       this.resultsSubject.next([...current, ...games.results]);
       this.next = games.next;
-      this.isLoading = false;
-      this.isLoadingMore = false;
-      this.cdr.detectChanges();
+      this.isLoadingMoreSubject.next(false);
     });
   }
 }
