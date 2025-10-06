@@ -22,6 +22,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './game-list.scss',
   standalone: true,
 })
+// TODO: Rehacer forma de obtener los datos de los juegos, imitar a como hace game-screenshots
 export class GameList implements AfterViewInit, OnDestroy, OnChanges {
   @ViewChild('observableGameList') observableGameList!: ElementRef;
   // eslint-disable-next-line

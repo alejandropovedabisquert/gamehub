@@ -1,0 +1,19 @@
+@if (gameScreenshots$ | async; as shot) {
+  <div class="screenshots">
+    @if (shot.results.length > 0) {
+        @for (item of shot.results; track item.id) {
+          <div class="screenshot">
+            <img [src]="item.image" [alt]="item.id" />
+          </div>
+        }
+    }
+    @else {
+      <p>No hay capturas disponibles.</p>
+    }
+  </div>
+}
+@else {
+  <div class="loading">
+    <p>Cargando capturas...</p>
+  </div>
+}

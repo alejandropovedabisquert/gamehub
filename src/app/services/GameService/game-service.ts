@@ -5,6 +5,7 @@ import { Platform } from '../../interfaces/platform';
 import { Observable } from 'rxjs';
 import { Game } from '../../interfaces/game';
 import { GameDetailInterface } from '../../interfaces/game-detail';
+import { ScreenshotResponse } from '../../interfaces/screenshot';
 
 @Injectable({
   providedIn: 'root',
@@ -53,10 +54,8 @@ export class GameService {
     );
   }
 
-  // eslint-disable-next-line
-  getGameScreenshots(slug: string): Observable<any> {
-    // eslint-disable-next-line
-    return this.http.get<any>(
+  getGameScreenshots(slug: string): Observable<ScreenshotResponse> {
+    return this.http.get<ScreenshotResponse>(
       `${this.baseUrl}/games/${slug}/screenshots?key=${this.apiKey}`
     );
   }

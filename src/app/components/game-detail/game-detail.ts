@@ -1,32 +1,28 @@
-import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { GameService } from '../../services/GameService/game-service';
-import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { GameDetailInterface } from '../../interfaces/game-detail';
+import { GameScreenshots } from "../game-screenshots/game-screenshots";
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-game-detail',
-  imports: [CommonModule],
+  imports: [AsyncPipe, GameScreenshots],
   templateUrl: './game-detail.html',
   styleUrl: './game-detail.scss',
 })
 export class GameDetail implements OnInit {
-  private cdr = inject(ChangeDetectorRef);
   private gameService: GameService = inject(GameService);
-  route: ActivatedRoute = inject(ActivatedRoute);
+  private route: ActivatedRoute = inject(ActivatedRoute);
   gameDetails$!: Observable<GameDetailInterface>;
-  isLoading = true;
-  
-  ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      const slug = params['slug'];
-      this.gameService.getGameDetails(slug).subscribe((gameDetails: GameDetailInterface) => {
-        this.gameDetails$ = of(gameDetails);
-        this.isLoading = false;
-        // console.log(gameDetails);
-        this.cdr.detectChanges();
-      });
-    });
+
+  constructor() {
+    this.gameDetails$ = new Observable<GameDetailInterface>();
   }
+
+  ngOnInit(): void {
+    this.gameDetails$ = this.gameService.getGameDetails(this.route.snapshot.params['slug']);
+  }  
+
 }

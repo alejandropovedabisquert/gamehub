@@ -1,10 +1,14 @@
-@if (isLoading) {
-    <div class="loading">
-        <p>Cargando detalles del juego...</p>
-    </div>
-} @else {
-    <h2>{{ (gameDetails$ | async)?.name }}</h2>
-    <p>{{ (gameDetails$ | async)?.description }}</p>
-    <img src="{{ (gameDetails$ | async)?.background_image }}" alt="">
-    <img src="{{ (gameDetails$ | async)?.background_image_additional }}" alt="">
+@if(gameDetails$ | async; as gameDetail){
+<div>
+    <h2>{{ gameDetail.name }}</h2>
+    <p [innerHTML]="gameDetail.description"></p>
+    <img [src]="gameDetail.background_image" alt="{{ gameDetail.name }}">
+    <img [src]="gameDetail.background_image_additional" alt="{{ gameDetail.name }} Additional">
+    <app-game-screenshots></app-game-screenshots>
+</div>
+}
+@else {
+<div class="loading">
+    <p>Cargando detalles del juego...</p>
+</div>
 }
