@@ -1,11 +1,5 @@
 // sidebar-filters.component.ts
-import {
-  Component,
-  OnInit,
-  Output,
-  EventEmitter,
-  inject,
-} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { GameService } from '../../services/GameService/game-service';
@@ -28,8 +22,9 @@ export class SidebarFilters implements OnInit {
   filtersForm: FormGroup;
   genres$!: Observable<Genre>;
   platforms$!: Observable<Platform>;
+  genresLoaded = false;
+  platformsLoaded = false;
   // TODO: Cuando seleccione algun filtro hacer un to top
-  // TODO: Arreglar bug NG0100: ExpressionChangedAfterItHasBeenCheckedError
   constructor() {
     // Inicializa el formulario con FormBuilder
     this.filtersForm = this.fb.group({
@@ -50,6 +45,7 @@ export class SidebarFilters implements OnInit {
       genres.results.forEach((genre) => {
         genresGroup.addControl(genre.slug, this.fb.control(false));
       });
+      this.genresLoaded = true;
     });
 
     this.platforms$ = this.gameService.getPlatforms();
@@ -58,6 +54,7 @@ export class SidebarFilters implements OnInit {
       platforms.results.forEach((platform) => {
         platformsGroup.addControl(String(platform.id), this.fb.control(false));
       });
+      this.platformsLoaded = true;
     });
 
     // Escucha los cambios en el formulario y emite los filtros procesados
