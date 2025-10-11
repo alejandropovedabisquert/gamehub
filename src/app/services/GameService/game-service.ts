@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Genre } from '../../interfaces/genre';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Platform } from '../../interfaces/platform';
-import { Observable } from 'rxjs';
+import { delay, Observable } from 'rxjs';
 import { Game } from '../../interfaces/game';
 import { GameDetailInterface } from '../../interfaces/game-detail';
 import { ScreenshotResponse } from '../../interfaces/screenshot';
@@ -16,19 +16,19 @@ export class GameService {
   baseUrl = 'https://api.rawg.io/api';
 
   getGenres(): Observable<Genre> {
-    return this.http.get<Genre>(`${this.baseUrl}/genres?key=${this.apiKey}`);
+    return this.http.get<Genre>(`${this.baseUrl}/genres?key=${this.apiKey}`).pipe(delay(1000));
   }
   getPlatforms(): Observable<Platform> {
     return this.http.get<Platform>(
       `${this.baseUrl}/platforms?key=${this.apiKey}`
-    );
+    ).pipe(delay(1000));
   }
   // eslint-disable-next-line
   getGames(filters?: any): Observable<Game> {
     // When filters are provided, construct the query parameters
-    // console.log('getGames called without filters:', filters);
+    // console.log('getGames called without filters:', filters?.nextPage);
     if (filters?.nextPage) {
-      return this.http.get<Game>(filters.nextPage);
+      return this.http.get<Game>(filters.nextPage).pipe(delay(1000));
     }
     let params = new HttpParams().set('key', this.apiKey ?? '');
     if (filters) {
@@ -45,25 +45,25 @@ export class GameService {
 
     const url = `${this.baseUrl}/games`;
     // console.log('Fetching games:', url + '?' + params.toString());
-    return this.http.get<Game>(url, { params });
+    return this.http.get<Game>(url, { params }).pipe(delay(1000));
   }
 
   getGameDetails(slug: string): Observable<GameDetailInterface> {
     return this.http.get<GameDetailInterface>(
       `${this.baseUrl}/games/${slug}?key=${this.apiKey}`
-    );
+    ).pipe(delay(1000));
   }
 
   getGameScreenshots(slug: string): Observable<ScreenshotResponse> {
     return this.http.get<ScreenshotResponse>(
       `${this.baseUrl}/games/${slug}/screenshots?key=${this.apiKey}`
-    );
+    ).pipe(delay(1000));
   }
   // eslint-disable-next-line
   getGameTrailers(slug: string): Observable<any> {
     // eslint-disable-next-line
     return this.http.get<any>(
       `${this.baseUrl}/games/${slug}/movies?key=${this.apiKey}`
-    );
+    ).pipe(delay(1000));
   }
 }

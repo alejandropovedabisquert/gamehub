@@ -1,6 +1,5 @@
 import {
   AfterViewInit,
-  ChangeDetectorRef,
   Component,
   ElementRef,
   inject,
@@ -28,10 +27,7 @@ export class GameList implements AfterViewInit, OnDestroy, OnChanges {
   // eslint-disable-next-line
   @Input() filters: any;
   private gameService: GameService = inject(GameService);
-  private cdr = inject(ChangeDetectorRef);
   private intersectionObserver: IntersectionObserver | undefined;
-  // eslint-disable-next-line
-  private filtersTimeout: any;
   private firstValueChange = true;
   private next: string | null = null;
   private resultsSubject = new BehaviorSubject<GameResult[]>([]);
@@ -57,13 +53,8 @@ export class GameList implements AfterViewInit, OnDestroy, OnChanges {
             if (!nextPage) {
               return;
             }
-            if (this.filtersTimeout) {
-              clearTimeout(this.filtersTimeout);
-            }
             this.isLoadingMoreSubject.next(true);
-            this.filtersTimeout = setTimeout(() => {
-              this.loadMoreGames({ nextPage });
-            }, 1000);
+            this.loadMoreGames({ nextPage });
           }
         });
       },
@@ -86,7 +77,7 @@ export class GameList implements AfterViewInit, OnDestroy, OnChanges {
     }
     if (changes['filters']) {
       const prev = changes['filters'].previousValue;
-      const curr = changes['filters'].currentValue;
+      const curr = changes['filters'].currentValue;     
       if (
         curr &&
         Object.keys(curr).length > 0 &&
@@ -97,7 +88,7 @@ export class GameList implements AfterViewInit, OnDestroy, OnChanges {
         this.next = null;
 
         this.loadMoreGames(curr);
-      } else if (!curr || Object.keys(curr).length === 0) {
+      } else if (Object.keys(curr).length === 0 && Object.keys(prev).length !== 0) {
         // Si los filtros están vacíos, reinicia la lista y carga sin filtros
         this.resultsSubject.next([]);
         this.next = null;
