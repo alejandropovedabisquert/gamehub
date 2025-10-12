@@ -1,7 +1,6 @@
-// sidebar-filters.component.ts
 import { Component, OnInit, Output, EventEmitter, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { GameService } from '../../services/GameService/game-service';
 import { Genre } from '../../interfaces/genre';
 import { Platform } from '../../interfaces/platform';
@@ -24,13 +23,13 @@ export class SidebarFilters implements OnInit {
   platforms$!: Observable<Platform>;
   genresLoaded = false;
   platformsLoaded = false;
-  // TODO: Cuando seleccione algun filtro hacer un to top
+
   constructor() {
     // Inicializa el formulario con FormBuilder
     this.filtersForm = this.fb.group({
       search: [''],
-      genres: this.fb.group({}), // Crea un FormGroup para géneros
-      platforms: this.fb.group({}), // Crea otro para plataformas
+      genres: this.fb.group({}),
+      platforms: this.fb.group({}),
     });
     this.genres$ = new Observable<Genre>();
     this.platforms$ = new Observable<Platform>();
@@ -59,7 +58,7 @@ export class SidebarFilters implements OnInit {
 
     // Escucha los cambios en el formulario y emite los filtros procesados
     this.filtersForm.valueChanges
-      .pipe(debounceTime(500), distinctUntilChanged())
+      .pipe(tap(() => this.toTop()), debounceTime(500), distinctUntilChanged())
       .subscribe((formValue) => {
         if (this.firstValueChange) {
           this.firstValueChange = false;
@@ -96,5 +95,9 @@ export class SidebarFilters implements OnInit {
     }
 
     return apiParams;
+  }
+
+  private toTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }

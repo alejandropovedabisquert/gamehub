@@ -22,6 +22,8 @@ import { Game, GameResult } from '../../interfaces/game';
   styleUrl: './game-list.scss',
   standalone: true,
 })
+// TODO: El load more no aplica correctamente.
+// Parece que al hacer el load more con el observer implementa 2 veces el mismo array
 export class GameList implements AfterViewInit, OnDestroy, OnChanges {
   @ViewChild('observableGameList') observableGameList!: ElementRef;
   // eslint-disable-next-line
@@ -73,7 +75,7 @@ export class GameList implements AfterViewInit, OnDestroy, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (this.firstValueChange) {
       this.firstValueChange = false;
-      return; // Ignora el primer valueChanges (vacío)
+      return;
     }
     if (changes['filters']) {
       const prev = changes['filters'].previousValue;
