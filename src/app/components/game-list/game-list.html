@@ -1,28 +1,27 @@
 <div class="game-list">
-    <h2>Game List</h2>
-    @if(currentResults$ | async; as games) {
-    <div class="game-cards">
-        @for (game of games; track game.id) {
-        <div class="game-card">
-            <a [routerLink]="['/game', game.slug]">
-                <img src="{{ game.background_image }}" alt="">
-                <p>{{ game.name }}</p>
-            </a>
-        </div>
-        } @empty {
-        <p>No hay juegos disponibles.</p>
-        }
+  <h2>Game List</h2>
+  @if(isInitialLoading$ | async) {
+  <div class="loading">
+    <p>Cargando juegos...</p>
+  </div>
+  } @else {
+  <div class="game-cards">
+    @for (game of (currentResults$ | async); track game.id) {
+    <div class="game-card">
+      <a [routerLink]="['/game', game.slug]">
+        <img src="{{ game.background_image }}" alt="" />
+        <p>{{ game.name }}</p>
+      </a>
     </div>
+    } @empty {
+    <p>No hay juegos disponibles.</p>
     }
-    @else {
-    <div class="loading">
-        <p>Cargando juegos...</p>
-    </div>
-    }
+  </div>
+  }
 </div>
 @if (isLoadingMore$ | async) {
 <div class="loading">
-    <p>Cargando más juegos...</p>
+  <p>Cargando más juegos...</p>
 </div>
 }
 <div id="load-more" #observableGameList></div>

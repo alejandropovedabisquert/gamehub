@@ -22,8 +22,6 @@ import { Game, GameResult } from '../../interfaces/game';
   styleUrl: './game-list.scss',
   standalone: true,
 })
-// TODO: El load more no aplica correctamente.
-// Parece que al hacer el load more con el observer implementa 2 veces el mismo array
 export class GameList implements AfterViewInit, OnDestroy, OnChanges {
   @ViewChild('observableGameList') observableGameList!: ElementRef;
   // eslint-disable-next-line
@@ -34,9 +32,12 @@ export class GameList implements AfterViewInit, OnDestroy, OnChanges {
   private next: string | null = null;
   private resultsSubject = new BehaviorSubject<GameResult[]>([]);
   private gameResults$!: Observable<Game>;
-  private isLoadingMoreSubject = new BehaviorSubject<boolean>(false);
+  private isLoadingMoreSubject = new BehaviorSubject<boolean>(true);
+  private isLoadingSubject = new BehaviorSubject<boolean>(true); // Nueva propiedad
+  private isLoading = false;
   currentResults$ = this.resultsSubject.asObservable();
   isLoadingMore$ = this.isLoadingMoreSubject.asObservable();
+  isInitialLoading$ = this.isLoadingSubject.asObservable(); // Nueva observable
 
   constructor() {
     this.gameResults$ = new Observable<Game>();
@@ -44,19 +45,26 @@ export class GameList implements AfterViewInit, OnDestroy, OnChanges {
 
   // Carga inicial de juegos y configuración del IntersectionObserver
   ngAfterViewInit() {
-    if (!this.intersectionObserver) {
-      this.loadMoreGames();
-    }
+    setTimeout(() => {
+      if (!this.intersectionObserver) {
+        this.loadMoreGames();
+      }
+      this.setupIntersectionObserver();
+    });
+  }
+
+  private setupIntersectionObserver() {
     this.intersectionObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
+          if (entry.isIntersecting && !this.isLoading) { // Verificar que no esté cargando
             const nextPage = this.next || null;
             if (!nextPage) {
               return;
             }
+            this.loadMoreGames({ nextPage }); 
+            this.isLoading = true;
             this.isLoadingMoreSubject.next(true);
-            this.loadMoreGames({ nextPage });
           }
         });
       },
@@ -79,20 +87,15 @@ export class GameList implements AfterViewInit, OnDestroy, OnChanges {
     }
     if (changes['filters']) {
       const prev = changes['filters'].previousValue;
-      const curr = changes['filters'].currentValue;     
-      if (
-        curr &&
-        Object.keys(curr).length > 0 &&
-        JSON.stringify(prev) !== JSON.stringify(curr)
-      ) {
+      const curr = changes['filters'].currentValue;
+      this.resultsSubject.next([]);
+      this.isLoadingSubject.next(true);
+      if (curr && Object.keys(curr).length > 0 && JSON.stringify(prev) !== JSON.stringify(curr)) {
         // Reinicia la lista y carga juegos con los nuevos filtros
-        this.resultsSubject.next([]);
         this.next = null;
-
         this.loadMoreGames(curr);
-      } else if (Object.keys(curr).length === 0 && Object.keys(prev).length !== 0) {
+      } else if (curr && Object.keys(curr).length === 0 && Object.keys(prev).length !== 0) {
         // Si los filtros están vacíos, reinicia la lista y carga sin filtros
-        this.resultsSubject.next([]);
         this.next = null;
         this.loadMoreGames();
       }
@@ -101,12 +104,27 @@ export class GameList implements AfterViewInit, OnDestroy, OnChanges {
 
   // eslint-disable-next-line
   private loadMoreGames(filters?: any) {
+    if (this.isLoading) {
+      return;
+    }
     this.gameResults$ = this.gameService.getGames(filters);
-    this.gameResults$.subscribe((games: Game) => {
-      const current = this.resultsSubject.value;
-      this.resultsSubject.next([...current, ...games.results]);
-      this.next = games.next;
-      this.isLoadingMoreSubject.next(false);
+    this.gameResults$.subscribe({
+      next: (games: Game) => {
+        const current = this.resultsSubject.value;
+        this.resultsSubject.next([...current, ...games.results]);
+        console.log(this.resultsSubject.value);
+        this.next = games.next;
+        this.isLoadingSubject.next(false); // Marcar como cargado
+      },
+      complete: () => {
+        this.isLoading = false;
+        this.isLoadingMoreSubject.next(false);
+      },
+      error: () => {
+        this.isLoading = false;
+        this.isLoadingMoreSubject.next(false);
+        this.isLoadingSubject.next(false); // También en caso de error
+      }
     });
   }
 }
