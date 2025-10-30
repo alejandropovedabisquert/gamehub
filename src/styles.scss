@@ -1,1 +1,92 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --primary-color: #ed9200;
+  --primary-lighter: #ffb74d;
+  --primary-lightest: #ffe0b3;
+  --primary-dark: #e68900;
+  --primary-darker: #cc7a00;
+  --primary-darkest: #b36b00;
+
+  // Colores complementarios y análogos
+  --secondary-color: #0092ed; // Azul complementario
+  --tertiary-color: #ed0092; // Rosa análogo
+  --accent-color: #92ed00; // Verde análogo
+
+  // Neutros que combinan bien
+  --background-color: #121212;
+  --background-light: #1e1e1e;
+  --text-color: #000000;
+  --text-muted: #b3b3b3;
+  --border-color: #333333;
+
+  --border-radius: 10px;
+
+  // Breakpoints estándar
+  --breakpoint-xs: 0px;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --breakpoint-xxl: 1400px;
+
+  // Container max-widths
+  --container-xs: 100%;
+  --container-sm: 600px;
+  --container-md: 800px;
+  --container-lg: 1100px;
+  --container-xl: 1400px;
+  --container-xxl: 1600px;
+
+  // Spacing
+  --spacing-xs: 0.25rem;    // 4px
+  --spacing-sm: 0.5rem;     // 8px
+  --spacing-md: 1rem;       // 16px
+  --spacing-lg: 1.5rem;     // 24px
+  --spacing-xl: 2rem;       // 32px
+  --spacing-xxl: 3rem;      // 48px
+}
+
+@font-face {
+    font-family: "Geist";
+    src: url('/fonts/Geist/Geist.ttf') format('truetype');
+}
+
+body {
+  background-color: var(--primary-lightest);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+  font-family: 'Geist', sans-serif;
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: var(--container-xxl);
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+
+  @media (max-width: 576px) {
+    max-width: var(--container-xs);
+    padding: 0 var(--spacing-sm);
+  }
+
+  @media (min-width: 576px) and (max-width: 768px) {
+    max-width: var(--container-sm);
+  }
+
+  @media (min-width: 768px) and (max-width: 992px) {
+    max-width: var(--container-md);
+  }
+
+  @media (min-width: 992px) and (max-width: 1200px) {
+    max-width: var(--container-lg);
+  }
+
+  @media (min-width: 1200px) and (max-width: 1400px) {
+    max-width: var(--container-xl);
+  }
+
+  @media (min-width: 1400px) {
+    max-width: var(--container-xxl);
+  }
+}

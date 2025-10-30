@@ -1,3 +1,6 @@
 .game-container {
   display: flex;
+  .app-game-list {
+    flex-grow: 2;
+  }
 }

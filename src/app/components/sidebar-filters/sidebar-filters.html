@@ -1,59 +1,61 @@
-<div>
-    @if(filtersForm) {
-        <form [formGroup]="filtersForm">
-            <input id="search" type="text" formControlName="search" placeholder="Search games..." />
-    
-            <h3>Genres</h3>
-            <div class="genres" formGroupName="genres">
-                @if(genres$ | async; as genres) {
-                    @if(genresLoaded) {
-                        @for (genre of genres.results; track genre.id;) {
-                            <div>
-                                <input 
-                                type="checkbox" 
-                                [id]="'genre-' + genre.slug"
-                                [formControlName]="genre.slug"
-                                />
-                                <label [for]="'genre-' + genre.slug">{{ genre.name }}</label>
-                            </div>
-                        } @empty {
-                            <p>There are no genres available.</p>
-                        }
-                    } @else {
-                        <p>Loading genres...</p>
-                    }
-                } @else {
-                    <p>Loading genres...</p>
-                }
-            </div>
-            
-            ---
-    
-            <h3>Platforms</h3>
-            <div class="platforms" formGroupName="platforms">
-                @if(platforms$ | async; as platforms) {
-                    @if(platformsLoaded) {
-                        @for (platform of platforms.results; track platform.id; let i = $index) {
-                            <div>
-                                <input 
-                                    type="checkbox" 
-                                    [id]="'platform-' + platform.id" 
-                                    [formControlName]="platform.id.toString()"
-                                />
-                                <label [for]="'platform-' + platform.id">{{ platform.name }}</label>
-                            </div>
-                        } @empty {
-                            <p>There are no platforms available.</p>
-                        }
-                    } @else {
-                        <p>Loading platforms...</p>
-                    }
-                } @else {
-                    <p>Loading platforms...</p>
-                }
-            </div>
-        </form>
-    } @else {
-        <p>Loading filters...</p>
-    }
+<div class="sidebar-filters">
+  @if(filtersForm) {
+  <form [formGroup]="filtersForm">
+    <input
+      id="search"
+      type="text"
+      formControlName="search"
+      placeholder="Search games..."
+    />
+
+    <h3>Genres</h3>
+    <div class="genres" formGroupName="genres">
+      @if(genres$ | async; as genres) { @if(genresLoaded) { @for (genre of
+      genres.results; track genre.id;) {
+      <div>
+        <label [for]="'genre-' + genre.slug">
+          <input
+            type="checkbox"
+            [id]="'genre-' + genre.slug"
+            [formControlName]="genre.slug"
+          />
+          <span class="checkmark"></span>
+          {{ genre.name }}
+        </label>
+      </div>
+      } @empty {
+      <p>There are no genres available.</p>
+      } } @else {
+      <p>Loading genres...</p>
+      } } @else {
+      <p>Loading genres...</p>
+      }
+    </div>
+
+    <h3>Platforms</h3>
+    <div class="platforms" formGroupName="platforms">
+      @if(platforms$ | async; as platforms) { @if(platformsLoaded) { @for
+      (platform of platforms.results; track platform.id; let i = $index) {
+      <div>
+        <label [for]="'platform-' + platform.id">
+        <input
+          type="checkbox"
+          [id]="'platform-' + platform.id"
+          [formControlName]="platform.id.toString()"
+        />
+        <span class="checkmark"></span>
+        {{ platform.name }}</label>
+      </div>
+      } @empty {
+      <p>There are no platforms available.</p>
+      } } @else {
+      <p>Loading platforms...</p>
+      } } @else {
+      <p>Loading platforms...</p>
+      }
+    </div>
+  </form>
+  } @else {
+  <p>Loading filters...</p>
+  }
 </div>

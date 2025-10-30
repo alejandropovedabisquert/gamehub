@@ -1,1 +1,87 @@
 // TODO: Agregar estilos para el sidebar de filtros
+.sidebar-filters {
+  padding: 16px;
+  border-right: 1px solid #eee;
+  border-radius: var(--border-radius);
+  background-color: var(--primary-lighter);
+  h3 {
+    margin-top: 16px;
+    margin-bottom: 8px;
+    color: var(--text-color);
+  }
+  form {
+    #search {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 16px;
+      border: 2px solid var(--primary-darkest);
+      background-color: var(--primary-lightest);
+      border-radius: var(--border-radius);
+      box-sizing: border-box;
+      outline: none;
+    }
+  }
+  .genres,
+  .platforms {
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 70vh);
+    overflow-y: auto;
+    div {
+      label {
+        display: block;
+        position: relative;
+        padding-left: 35px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 22px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        &:hover input ~ .checkmark {
+          background-color: var(--primary-color);
+        }
+        input {
+          position: absolute;
+          opacity: 0;
+          cursor: pointer;
+          height: 0;
+          width: 0;
+          &:checked ~ .checkmark {
+            background-color: var(--primary-darkest);
+          }
+          &:checked ~ .checkmark:after {
+            display: block;
+          }
+        }
+        .checkmark {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 25px;
+          width: 25px;
+          background-color: var(--primary-lightest);
+          border-radius: var(--border-radius);
+          border: 2px solid var(--primary-darkest);
+          &:after {
+            content: "";
+            position: absolute;
+            display: none;
+          }
+          &:after {
+            left: 9px;
+            top: 5px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+          }
+        }
+      }
+    }
+  }
+}

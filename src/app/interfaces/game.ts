@@ -29,6 +29,11 @@ export interface GameResult {
         name: string;
     };
     platforms: Platform[];
+    genres: {
+        id: number;
+        slug: string;
+        name: string;
+    }[];
 }
 
 interface Platform {

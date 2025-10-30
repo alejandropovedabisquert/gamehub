@@ -8,10 +8,34 @@
   <div class="game-cards">
     @for (game of (currentResults$ | async); track game.id) {
     <div class="game-card">
-      <a [routerLink]="['/game', game.slug]">
-        <img src="{{ game.background_image }}" alt="" />
-        <p>{{ game.name }}</p>
-      </a>
+      <img src="{{ game.background_image }}" alt="" />
+      <div class="game-card-content">
+        <a [routerLink]="['/game', game.slug]">
+          <p>{{ game.name }}</p>
+        </a>
+        <div class="info-extra">
+          <div class="extra release-date">
+            <p>
+              <strong>Release Date:</strong>
+            </p>
+            <p>{{ game.released }}</p>
+          </div>
+          <div class="separator"></div>
+          <div class="extra genres">
+            <p><strong>Genres:</strong></p>
+            <p>
+              @for (genre of game.genres; track genre.id; let isLast = $last) {
+              <span class="genre">{{ genre.name }}</span>
+              @if (!isLast) {
+                <span>, </span>
+              }
+              } @empty {
+              <span class="genre">Sin géneros</span>
+              }
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
     } @empty {
     <p>No hay juegos disponibles.</p>
