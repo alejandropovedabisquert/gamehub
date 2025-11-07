@@ -1,23 +1,39 @@
 /* You can add global styles to this file, and also import other style files */
 :root {
-  --primary-color: #ed9200;
-  --primary-lighter: #ffb74d;
-  --primary-lightest: #ffe0b3;
-  --primary-dark: #e68900;
-  --primary-darker: #cc7a00;
-  --primary-darkest: #b36b00;
+  /* ======================================= */
+  /* == Paleta Base (Tierra y Oro) == */
+  /* ======================================= */
+  --clr-one: #C9C4AC;
+  --clr-two: #39321B;
+  --clr-three: #C69639;
 
-  // Colores complementarios y análogos
-  --secondary-color: #0092ed; // Azul complementario
-  --tertiary-color: #ed0092; // Rosa análogo
-  --accent-color: #92ed00; // Verde análogo
+  /* ------------------------------------------ */
+  /* Paleta Semántica (Uso por función) */
+  /* ------------------------------------------ */
 
-  // Neutros que combinan bien
-  --background-color: #121212;
-  --background-light: #1e1e1e;
-  --text-color: #000000;
-  --text-muted: #b3b3b3;
-  --border-color: #333333;
+  /* Colores principales de la marca (usando tus colores) */
+  --clr-primary: var(--clr-three);
+  --clr-secondary: var(--clr-one);
+  --clr-accent: var(--clr-two);
+
+  /* Colores de fondo y superficies */
+  --clr-background: var(--clr-secondary);
+  --clr-surface: var(--clr-accent);
+
+  /* Colores de texto (Sobre fondos claros) */
+  --clr-text: var(--clr-accent);
+  --clr-text-muted: var(--clr-secondary);
+
+  /* Colores "On" (Texto SOBRE fondos de color) */
+  --clr-on-primary: #ffffff; /* Blanco sobre oro viejo */
+  --clr-on-secondary: var(
+    --clr-accent
+  ); /* Texto oscuro sobre amarillo pálido */
+  --clr-on-accent: var(
+    --clr-one
+  ); /* Texto oscuro sobre naranja (mejor contraste) */
+  --clr-on-background: var(--clr-text);
+  --clr-on-surface: var(--clr-text-muted);
 
   --border-radius: 10px;
 
@@ -38,26 +54,37 @@
   --container-xxl: 1600px;
 
   // Spacing
-  --spacing-xs: 0.25rem;    // 4px
-  --spacing-sm: 0.5rem;     // 8px
-  --spacing-md: 1rem;       // 16px
-  --spacing-lg: 1.5rem;     // 24px
-  --spacing-xl: 2rem;       // 32px
-  --spacing-xxl: 3rem;      // 48px
+  --spacing-xs: 0.25rem; // 4px
+  --spacing-sm: 0.5rem; // 8px
+  --spacing-md: 1rem; // 16px
+  --spacing-lg: 1.5rem; // 24px
+  --spacing-xl: 2rem; // 32px
+  --spacing-xxl: 3rem; // 48px
 }
 
 @font-face {
-    font-family: "Geist";
-    src: url('/fonts/Geist/Geist.ttf') format('truetype');
+  font-family: "Geist";
+  src: url("/fonts/Geist/Geist.ttf") format("truetype");
 }
 
 body {
-  background-color: var(--primary-lightest);
-  color: var(--text-color);
+  background-color: var(--clr-background);
+  color: var(--clr-on-background);
   margin: 0;
   padding: 0;
-  font-family: 'Geist', sans-serif;
+  font-family: "Geist", sans-serif;
   box-sizing: border-box;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: var(--clr-on-background);
+  }
+  a {
+    color: var(--clr-accent);
+  }
 }
 
 .container {

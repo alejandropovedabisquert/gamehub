@@ -6,9 +6,9 @@
     gap: 25px;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     .game-card {
-      background-color: var(--primary-lighter);
+      background-color: var(--clr-surface);
       transition: transform 0.3s ease, box-shadow 0.8s ease;
-      border: 1px solid var(--primary-lighter);
+      border: 1px solid var(--clr-surface);
       border-radius: var(--border-radius);
       img {
         width: 100%;
@@ -26,7 +26,7 @@
             text-align: left;
             font-weight: bolder;
             font-size: 20px;
-            color: var(--text-color);
+            color: var(--clr-on-surface);
           }
         }
       }
@@ -36,7 +36,7 @@
         width: 100%;
         height: auto;
         overflow: hidden;
-        background-color: var(--primary-lighter);
+        background-color: var(--clr-surface);
         position: absolute;
         bottom: 0;
         left: -1px;
@@ -44,16 +44,19 @@
         // transition: all 0.3s ease;
         border-bottom-left-radius: var(--border-radius);
         border-bottom-right-radius: var(--border-radius);
-        border: 1px solid var(--primary-lighter);
+        border: 1px solid var(--clr-surface);
         .extra {
           padding: 0 8px;
           display: flex;
           justify-content: space-between;
+          p{
+            color: var(--clr-on-surface);
+          }
         }
         .separator{
           width: calc(100% - 8px);
           margin: 0 auto;
-          border: solid 1px var(--primary-darkest) !important;
+          border: solid 1px var(--clr-on-surface) !important;
         }
       }
       &:hover {
