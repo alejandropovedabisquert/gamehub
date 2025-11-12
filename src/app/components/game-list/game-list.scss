@@ -4,15 +4,15 @@
   .game-cards {
     display: grid;
     gap: 25px;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     .game-card {
       background-color: var(--clr-surface);
       transition: transform 0.3s ease, box-shadow 0.8s ease;
-      border: 1px solid var(--clr-surface);
+      border: 4px solid var(--clr-surface);
       border-radius: var(--border-radius);
       img {
         width: 100%;
-        height: 300px;
+        height: 250px;
         object-fit: cover;
         border-top-left-radius: var(--border-radius);
         border-top-right-radius: var(--border-radius);
@@ -39,28 +39,31 @@
         background-color: var(--clr-surface);
         position: absolute;
         bottom: 0;
-        left: -1px;
+        left: -4px;
         transform: translateY(99%);
         // transition: all 0.3s ease;
         border-bottom-left-radius: var(--border-radius);
         border-bottom-right-radius: var(--border-radius);
-        border: 1px solid var(--clr-surface);
+        border: 4px solid var(--clr-surface);
         .extra {
           padding: 0 8px;
           display: flex;
           justify-content: space-between;
-          p{
+          p {
             color: var(--clr-on-surface);
+            &:last-child {
+              text-align: right;
+            }
           }
         }
-        .separator{
+        .separator {
           width: calc(100% - 8px);
           margin: 0 auto;
           border: solid 1px var(--clr-on-surface) !important;
         }
       }
       &:hover {
-        transform: scale(1.05);
+        transform: scale(1.02);
         z-index: 1;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
@@ -73,12 +76,20 @@
       }
     }
   }
-  .loading {
-    height: 100vh;
+  .loading.skeleton-cards {
+    display: grid;
+    gap: 25px;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    .skeleton-card {
+      width: 100%;
+      height: 340px;
+      background-color: grey;
+      border-radius: var(--border-radius);
+      animation: pulse 1.5s infinite;
+    }
   }
 }
-#load-more {
-  height: 20px;
-  width: 100%;
-  background-color: red;
+.loading {
+  text-align: center;
+  margin: 16px 0;
 }

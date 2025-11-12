@@ -1,8 +1,11 @@
+<!-- TODO: Implementar iconos de plataformas -->
 <div class="game-list">
   <h2>Game List</h2>
   @if(isInitialLoading$ | async) {
-  <div class="loading">
-    <p>Cargando juegos...</p>
+  <div class="loading skeleton-cards">
+    @for (skeleton of skeletonCardsArray; track skeleton) {
+    <div class="skeleton-card"></div>
+    }
   </div>
   } @else {
   <div class="game-cards">
@@ -27,9 +30,8 @@
               @for (genre of game.genres; track genre.id; let isLast = $last) {
               <span class="genre">{{ genre.name }}</span>
               @if (!isLast) {
-                <span>, </span>
-              }
-              } @empty {
+              <span>, </span>
+              } } @empty {
               <span class="genre">Sin géneros</span>
               }
             </p>
@@ -45,7 +47,7 @@
 </div>
 @if (isLoadingMore$ | async) {
 <div class="loading">
-  <p>Cargando más juegos...</p>
+  <img src="minimal-spinner.svg" alt="">
 </div>
 }
 <div id="load-more" #observableGameList></div>

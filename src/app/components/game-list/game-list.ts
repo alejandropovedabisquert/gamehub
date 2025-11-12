@@ -38,8 +38,11 @@ export class GameList implements AfterViewInit, OnDestroy, OnChanges {
   currentResults$ = this.resultsSubject.asObservable();
   isLoadingMore$ = this.isLoadingMoreSubject.asObservable();
   isInitialLoading$ = this.isLoadingSubject.asObservable(); // Nueva observable
+  skeletonCardsArray: any[] = [];
 
+  
   constructor() {
+    this.skeletonCardsArray = Array(12).fill(0);
     this.gameResults$ = new Observable<Game>();
   }
 

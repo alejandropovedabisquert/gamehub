@@ -25,11 +25,11 @@
       </div>
       } @empty {
       <p>There are no genres available.</p>
-      } } @else {
-      <p>Loading genres...</p>
-      } } @else {
-      <p>Loading genres...</p>
-      }
+      } } @else { @for (skeleton of skeletonFilters; track skeleton) {
+      <div class="skeleton-filter"></div>
+      } } } @else { @for (skeleton of skeletonFilters; track skeleton) {
+      <div class="skeleton-filter"></div>
+      } }
     </div>
 
     <h3>Platforms</h3>
@@ -38,21 +38,22 @@
       (platform of platforms.results; track platform.id; let i = $index) {
       <div>
         <label [for]="'platform-' + platform.id">
-        <input
-          type="checkbox"
-          [id]="'platform-' + platform.id"
-          [formControlName]="platform.id.toString()"
-        />
-        <span class="checkmark"></span>
-        {{ platform.name }}</label>
+          <input
+            type="checkbox"
+            [id]="'platform-' + platform.id"
+            [formControlName]="platform.id.toString()"
+          />
+          <span class="checkmark"></span>
+          {{ platform.name }}</label
+        >
       </div>
       } @empty {
       <p>There are no platforms available.</p>
-      } } @else {
-      <p>Loading platforms...</p>
-      } } @else {
-      <p>Loading platforms...</p>
-      }
+      } } @else { @for (skeleton of skeletonFilters; track skeleton) {
+      <div class="skeleton-filter"></div>
+      } } } @else { @for (skeleton of skeletonFilters; track skeleton) {
+      <div class="skeleton-filter"></div>
+      } }
     </div>
   </form>
   } @else {

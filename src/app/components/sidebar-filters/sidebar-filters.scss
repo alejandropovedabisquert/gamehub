@@ -26,6 +26,9 @@
       &::placeholder {
         color: var(--clr-on-background);
       }
+      &:focus {
+        background-color: var(--clr-primary);
+      }
     }
   }
   .genres,
@@ -34,14 +37,15 @@
     flex-direction: column;
     max-height: calc(100vh - 70vh);
     overflow-y: auto;
+    width: 100%;
     div {
       label {
         display: block;
         position: relative;
-        padding-left: 35px;
+        padding-left: 30px;
         margin-bottom: 12px;
         cursor: pointer;
-        font-size: 22px;
+        font-size: 16px;
         -webkit-user-select: none;
         -moz-user-select: none;
         -ms-user-select: none;
@@ -67,8 +71,8 @@
           position: absolute;
           top: 0;
           left: 0;
-          height: 25px;
-          width: 25px;
+          height: 18px;
+          width: 18px;
           background-color: var(--clr-background);
           border-radius: var(--border-radius);
           border: 2px solid var(--clr-on-background);
@@ -90,6 +94,14 @@
           }
         }
       }
+    }
+    .skeleton-filter {
+      height: 100px;
+      margin-bottom: 12px;
+      width: 100%;
+      border-radius: var(--border-radius);
+      background-color: grey;
+      animation: pulse 1.5s infinite;
     }
   }
 }

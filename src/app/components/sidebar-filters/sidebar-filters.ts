@@ -23,8 +23,10 @@ export class SidebarFilters implements OnInit {
   platforms$!: Observable<Platform>;
   genresLoaded = false;
   platformsLoaded = false;
+  skeletonFilters: any[] = [];
 
   constructor() {
+      this.skeletonFilters = Array(10).fill(0);
     // Inicializa el formulario con FormBuilder
     this.filtersForm = this.fb.group({
       search: [''],
