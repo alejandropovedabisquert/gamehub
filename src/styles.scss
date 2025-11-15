@@ -25,13 +25,12 @@
   --clr-text-muted: var(--clr-secondary);
 
   /* Colores "On" (Texto SOBRE fondos de color) */
-  --clr-on-primary: #ffffff; /* Blanco sobre oro viejo */
-  --clr-on-secondary: var(
-    --clr-accent
-  ); /* Texto oscuro sobre amarillo pálido */
-  --clr-on-accent: var(
-    --clr-one
-  ); /* Texto oscuro sobre naranja (mejor contraste) */
+  --clr-on-primary: #ffffff;
+  /* Blanco sobre oro viejo */
+  --clr-on-secondary: var(--clr-accent);
+  /* Texto oscuro sobre amarillo pálido */
+  --clr-on-accent: var(--clr-two);
+  /* Texto oscuro sobre naranja (mejor contraste) */
   --clr-on-background: var(--clr-text);
   --clr-on-surface: var(--clr-text-muted);
 
@@ -67,9 +66,9 @@
   src: url("/fonts/Geist/Geist.ttf") format("truetype");
 }
 
-html{
-    scrollbar-color: var(--clr-primary) var(--clr-background);
-    scrollbar-gutter: stable;
+html {
+  scrollbar-color: var(--clr-primary) var(--clr-background);
+  scrollbar-gutter: stable;
 }
 
 body {
@@ -79,6 +78,7 @@ body {
   padding: 0;
   font-family: "Geist", sans-serif;
   box-sizing: border-box;
+
   h1,
   h2,
   h3,
@@ -87,6 +87,7 @@ body {
   h6 {
     color: var(--clr-on-background);
   }
+
   a {
     color: var(--clr-accent);
   }
@@ -123,6 +124,56 @@ body {
   }
 }
 
+.btn {
+  display: inline-block;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 5px 20px;
+  font-size: 16px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  &.btn-primary {
+    border: 2px solid var(--clr-primary);
+    background-color: transparent;
+    color: var(--clr-primary);
+
+    &:hover {
+      background-color: var(--clr-primary);
+      color: var(--clr-on-primary);
+    }
+  }
+
+  &.btn-secondary {
+    border: 2px solid var(--clr-secondary);
+    background-color: transparent;
+    color: var(--clr-secondary);
+
+    &:hover {
+      background-color: var(--clr-secondary);
+      color: var(--clr-on-secondary);
+    }
+  }
+
+  &.btn-accent {
+    border: 2px solid var(--clr-accent);
+    background-color: transparent;
+    color: var(--clr-accent);
+
+    &:hover {
+      background-color: var(--clr-accent);
+      color: var(--clr-on-accent);
+    }
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
 
 @keyframes pulse {
   50% {

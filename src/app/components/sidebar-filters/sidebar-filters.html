@@ -1,6 +1,16 @@
 <div class="sidebar-filters">
   @if(filtersForm) {
   <form [formGroup]="filtersForm">
+
+    <div class="head_sidebar">
+      <div class="title_sidebar">
+        <h2>Filters</h2>
+      </div>
+      <div class="clear_filters">
+        <button class="btn btn-secondary" type="button" (click)="filtersForm.reset()" [disabled]="!filtersForm.dirty">Clear Filters</button>
+      </div>
+    </div>
+
     <input
       id="search"
       type="text"
