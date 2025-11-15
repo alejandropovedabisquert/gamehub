@@ -29,13 +29,20 @@ export interface GameResult {
         name: string;
     };
     platforms: Platform[];
+    parent_platforms: ParentPlatform[];
     genres: {
         id: number;
         slug: string;
         name: string;
     }[];
 }
-
+interface ParentPlatform {
+    platform: {
+        id: number;
+        slug: string;
+        name: string;
+    }
+}
 interface Platform {
     platform: {
         id: number;

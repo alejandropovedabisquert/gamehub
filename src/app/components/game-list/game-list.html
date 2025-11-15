@@ -13,6 +13,19 @@
     <div class="game-card">
       <img src="{{ game.background_image }}" alt="" />
       <div class="game-card-content">
+        <div class="platform_icons">
+          <div class="icons">
+            @for (platform of game.parent_platforms; track platform.platform.id) {
+            <img
+              [src]="'/platform_icons/' + platform.platform.slug + '.svg'"
+              [alt]="platform.platform.name"
+              [title]="platform.platform.name"
+            />
+            } @empty {
+            <span>No platforms</span>
+            }
+          </div>
+        </div>
         <a [routerLink]="['/game', game.slug]">
           <p>{{ game.name }}</p>
         </a>

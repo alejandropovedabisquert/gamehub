@@ -2,29 +2,29 @@
 .sidebar-filters {
   padding: 16px;
   border-radius: var(--border-radius);
-  background-color: var(--clr-background);
+  background-color: var(--clr-surface);
   border: 4px solid var(--clr-surface);
-  p{
-    color: var(--clr-on-background);
+  p {
+    color: var(--clr-on-surface);
   }
   h3 {
     margin-top: 16px;
     margin-bottom: 8px;
-    color: var(--clr-on-background);
+    color: var(--clr-on-surface);
   }
   form {
     #search {
       width: 100%;
       padding: 8px;
       margin-bottom: 16px;
-      border: 2px solid var(--clr-surface);
-      background-color: var(--clr-background);
+      border: 2px solid var(--clr-background);
+      background-color: var(--clr-surface);
       border-radius: var(--border-radius);
       box-sizing: border-box;
       outline: none;
-      color: var(--clr-on-background);
+      color: var(--clr-on-surface);
       &::placeholder {
-        color: var(--clr-on-background);
+        color: var(--clr-on-surface);
       }
       &:focus {
         background-color: var(--clr-primary);
@@ -50,7 +50,7 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        color: var(--clr-on-background);
+        color: var(--clr-on-surface);
         &:hover input ~ .checkmark {
           background-color: var(--clr-primary);
         }
@@ -61,7 +61,7 @@
           height: 0;
           width: 0;
           &:checked ~ .checkmark {
-            background-color: var(--clr-on-background);
+            background-color: var(--clr-on-surface);
           }
           &:checked ~ .checkmark:after {
             display: block;
@@ -73,20 +73,20 @@
           left: 0;
           height: 18px;
           width: 18px;
-          background-color: var(--clr-background);
+          background-color: var(--clr-surface);
           border-radius: var(--border-radius);
-          border: 2px solid var(--clr-on-background);
+          border: 2px solid var(--clr-on-surface);
           &:after {
             content: "";
             position: absolute;
             display: none;
           }
           &:after {
-            left: 9px;
-            top: 5px;
-            width: 5px;
-            height: 10px;
-            border: solid var(--clr-background);
+            left: 6px;
+            top: 3px;
+            width: 3px;
+            height: 7px;
+            border: solid var(--clr-surface);
             border-width: 0 3px 3px 0;
             -webkit-transform: rotate(45deg);
             -ms-transform: rotate(45deg);
