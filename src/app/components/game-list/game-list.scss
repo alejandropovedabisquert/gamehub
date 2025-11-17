@@ -40,6 +40,37 @@
           }
         }
 
+        .metacritic {
+          min-width: 32px;
+          position: absolute;
+          right: 8px;
+          top: 8px;
+          border-radius: var(--border-radius);
+          text-align: center;
+          padding: 2px 0;
+          font-weight: bold;
+          font-size: 14px;
+          &.good {
+            border: 2px solid #27ae60;
+            color: #27ae60;
+          }
+
+          &.average {
+            border: 2px solid #8d7208;
+            color: #8d7208;
+          }
+
+          &.poor {
+            border: 2px solid #e74c3c;
+            color: #e74c3c;
+          }
+
+          &.no-score {
+            border: 2px solid #95a5a6;
+            color: #95a5a6;
+          }
+        }
+
         a {
           text-decoration: none;
 

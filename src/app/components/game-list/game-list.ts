@@ -11,13 +11,13 @@ import {
 } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { GameService } from '../../services/GameService/game-service';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, CommonModule, DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Game, GameResult } from '../../interfaces/game';
 
 @Component({
   selector: 'app-game-list',
-  imports: [AsyncPipe, RouterLink],
+  imports: [AsyncPipe, RouterLink, DatePipe, CommonModule],
   templateUrl: './game-list.html',
   styleUrl: './game-list.scss',
   standalone: true,
@@ -40,7 +40,7 @@ export class GameList implements AfterViewInit, OnDestroy, OnChanges {
   isInitialLoading$ = this.isLoadingSubject.asObservable(); // Nueva observable
   skeletonCardsArray: any[] = [];
 
-  
+
   constructor() {
     this.skeletonCardsArray = Array(12).fill(0);
     this.gameResults$ = new Observable<Game>();
@@ -65,7 +65,7 @@ export class GameList implements AfterViewInit, OnDestroy, OnChanges {
             if (!nextPage) {
               return;
             }
-            this.loadMoreGames({ nextPage }); 
+            this.loadMoreGames({ nextPage });
             this.isLoading = true;
             this.isLoadingMoreSubject.next(true);
           }
@@ -129,5 +129,12 @@ export class GameList implements AfterViewInit, OnDestroy, OnChanges {
         this.isLoadingSubject.next(false); // También en caso de error
       }
     });
+  }
+
+  getMetacriticClass(score: number | null | undefined): string {
+    if (score == null) return 'no-score';
+    if (score >= 75) return 'good';
+    if (score >= 50) return 'average';
+    return 'poor';
   }
 }

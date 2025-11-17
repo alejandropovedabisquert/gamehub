@@ -26,6 +26,9 @@
             }
           </div>
         </div>
+        <div class="metacritic" [ngClass]="getMetacriticClass(game.metacritic)">
+          {{ game.metacritic ?? 'N/A' }}
+        </div>
         <a [routerLink]="['/game', game.slug]">
           <p>{{ game.name }}</p>
         </a>
@@ -34,7 +37,7 @@
             <p>
               <strong>Release Date:</strong>
             </p>
-            <p>{{ game.released }}</p>
+            <p>{{ game.released | date }}</p>
           </div>
           <div class="separator"></div>
           <div class="extra genres">
