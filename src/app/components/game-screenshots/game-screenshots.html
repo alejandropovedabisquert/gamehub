@@ -1,7 +1,10 @@
 @if (gameScreenshots$ | async; as shot) {
   <div class="screenshots">
+    <div class="screenshot principal">
+      <img [src]="principalImage" alt="Principal Screenshot" />
+    </div>
     @if (shot.results.length > 0) {
-        @for (item of shot.results; track item.id) {
+        @for (item of (shot.results | slice:0:4); track item.id) {
           <div class="screenshot">
             <img [src]="item.image" [alt]="item.id" />
           </div>

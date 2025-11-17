@@ -23,6 +23,10 @@ export class GameDetail implements OnInit {
 
   ngOnInit(): void {
     this.gameDetails$ = this.gameService.getGameDetails(this.route.snapshot.params['slug']);
+    this.gameDetails$.subscribe((data) => {
+      console.log('Game Details:', data);
+    });
+        
   }  
 
 }

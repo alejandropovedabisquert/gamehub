@@ -215,7 +215,8 @@
           top: 3em;
           opacity: 0;
           visibility: hidden;
-
+          z-index: 99;
+          box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
           &.active {
             opacity: 1;
             visibility: visible;
