@@ -1,69 +1,74 @@
 <div class="sidebar-filters">
   @if(filtersForm) {
   <form [formGroup]="filtersForm">
-
     <div class="head_sidebar">
       <div class="title_sidebar">
         <h2>Filters</h2>
       </div>
       <div class="clear_filters">
-        <button class="btn btn-secondary" type="button" (click)="filtersForm.reset()" [disabled]="!filtersForm.dirty">Clear Filters</button>
+        <button class="btn btn-secondary" type="button" (click)="filtersForm.reset()" [disabled]="!filtersForm.dirty">
+          Clear Filters
+        </button>
       </div>
     </div>
-
-    <input
-      id="search"
-      type="text"
-      formControlName="search"
-      placeholder="Search games..."
-    />
-
-    <h3>Genres</h3>
-    <div class="genres" formGroupName="genres">
-      @if(genres$ | async; as genres) { @if(genresLoaded) { @for (genre of
-      genres.results; track genre.id;) {
-      <div>
-        <label [for]="'genre-' + genre.slug">
-          <input
-            type="checkbox"
-            [id]="'genre-' + genre.slug"
-            [formControlName]="genre.slug"
-          />
-          <span class="checkmark"></span>
-          {{ genre.name }}
-        </label>
-      </div>
-      } @empty {
-      <p>There are no genres available.</p>
-      } } @else { @for (skeleton of skeletonFilters; track skeleton) {
-      <div class="skeleton-filter"></div>
-      } } } @else { @for (skeleton of skeletonFilters; track skeleton) {
-      <div class="skeleton-filter"></div>
-      } }
+    <div class="search_container">
+      <input id="search" type="text" formControlName="search" placeholder="Search games..." />
     </div>
-
-    <h3>Platforms</h3>
-    <div class="platforms" formGroupName="platforms">
-      @if(platforms$ | async; as platforms) { @if(platformsLoaded) { @for
-      (platform of platforms.results; track platform.id; let i = $index) {
-      <div>
-        <label [for]="'platform-' + platform.id">
-          <input
-            type="checkbox"
-            [id]="'platform-' + platform.id"
-            [formControlName]="platform.id.toString()"
-          />
-          <span class="checkmark"></span>
-          {{ platform.name }}</label
-        >
+    <div class="genres_container">
+      <h3>
+        Genres
+      </h3>
+      <div class="button_toggle_mobile" (click)="toggle('genres')" (keyup.enter)="toggle('genres')" (keyup.space)="toggle('genres')" tabindex="0">
+        <span class="text">Genres</span> <span class="image"><img src="dropdown.svg" alt=""></span>
       </div>
-      } @empty {
-      <p>There are no platforms available.</p>
-      } } @else { @for (skeleton of skeletonFilters; track skeleton) {
-      <div class="skeleton-filter"></div>
-      } } } @else { @for (skeleton of skeletonFilters; track skeleton) {
-      <div class="skeleton-filter"></div>
-      } }
+      <div class="genres" [class.active]="isActive('genres')" formGroupName="genres">
+        @if(genres$ | async; as genres) { @if(genresLoaded) { @for (genre of
+        genres.results; track genre.id;) {
+        <div>
+          <label [for]="'genre-' + genre.slug">
+            <input type="checkbox" [id]="'genre-' + genre.slug" [formControlName]="genre.slug" />
+            <span class="checkmark"></span>
+            {{ genre.name }}
+          </label>
+        </div>
+        } @empty {
+        <p>There are no genres available.</p>
+        } } @else { @for (skeleton of skeletonFilters; track skeleton) {
+        <div class="skeleton-filter"></div>
+        } } } @else { @for (skeleton of skeletonFilters; track skeleton) {
+        <div class="skeleton-filter"></div>
+        } }
+      </div>
+    </div>
+    <div class="platforms_container">
+      <h3>
+        Platforms
+      </h3>
+      <div class="button_toggle_mobile" (click)="toggle('platforms')" (keyup.enter)="toggle('platforms')" (keyup.space)="toggle('platforms')" tabindex="0">
+        <span class="text">Platforms</span> <span class="image"><img src="dropdown.svg" alt=""></span>
+      </div>
+      <div class="platforms" [class.active]="isActive('platforms')" formGroupName="platforms">
+        @if(platforms$ | async; as platforms) { @if(platformsLoaded) { @for
+        (platform of platforms.results; track platform.id; let i = $index) {
+        <div>
+          <label [for]="'platform-' + platform.id">
+            <input type="checkbox" [id]="'platform-' + platform.id" [formControlName]="platform.id.toString()" />
+            <span class="checkmark"></span>
+            {{ platform.name }}</label>
+        </div>
+        } @empty {
+        <p>There are no platforms available.</p>
+        } } @else { @for (skeleton of skeletonFilters; track skeleton) {
+        <div class="skeleton-filter"></div>
+        } } } @else { @for (skeleton of skeletonFilters; track skeleton) {
+        <div class="skeleton-filter"></div>
+        } }
+      </div>
+    </div>
+    <div class="clear_filters_mobile">
+      <button class="btn btn-primary" type="button" (click)="filtersForm.reset()" [disabled]="!filtersForm.dirty">
+        Clear Filters
+      </button>
     </div>
   </form>
   } @else {
