@@ -26,7 +26,20 @@ export class GameDetail implements OnInit {
     this.gameDetails$.subscribe((data) => {
       console.log('Game Details:', data);
     });
-        
-  }  
+  }
+
+  hoverOnGraph(data: string) {
+    console.log(data);
+    const el = document.getElementById(data);
+    if (el) {
+      el.classList.add("active")
+    }
+  }
+  leaveGraph(data: string) {
+    const el = document.getElementById(data);
+    if (el) {
+      el.classList.remove("active");
+    }
+  }
 
 }

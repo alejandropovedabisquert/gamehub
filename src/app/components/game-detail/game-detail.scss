@@ -1,10 +1,106 @@
-.game-detail{
+.game-detail {
     display: flex;
-    .game-content{
-        .title{
-            h2{
+    gap: 40px;
+
+    .game-content {
+        width: 60%;
+
+        .title {
+            h1 {
                 font-size: 64px;
             }
         }
+
+        .game-distribution-rating {
+            .graph-rating {
+                display: flex;
+
+                .graph-section {
+                    height: 40px;
+                    transition: box-shadow .3s ease;
+                    cursor: pointer;
+
+                    &:first-child {
+                        border-top-left-radius: var(--border-radius);
+                        border-bottom-left-radius: var(--border-radius);
+                    }
+
+                    &:last-child {
+                        border-top-right-radius: var(--border-radius);
+                        border-bottom-right-radius: var(--border-radius);
+                    }
+
+                    &.exceptional {
+                        background-color: green;
+                    }
+
+                    &.recommended {
+                        background-color: #009292;
+                    }
+
+                    &.meh {
+                        background-color: orange;
+                    }
+
+                    &.skip {
+                        background-color: red;
+                    }
+
+                    &.active,
+                    &:hover {
+                        box-shadow: 0 0 10px 0 var(--clr-primary);
+                    }
+                }
+            }
+
+            .ratings-text {
+                display: flex;
+                flex-wrap: wrap;
+                width: fit-content;
+                margin-top: 1em;
+                gap: 1em;
+                .rating {
+                    display: flex;
+                    text-transform: capitalize;
+                    cursor: pointer;
+                    align-items: baseline;
+                    justify-content: center;
+                    padding: .5em 1em;
+                    transition: border .3s ease;
+                    border: 2px solid transparent;
+                    border-radius: var(--border-radius);
+                    gap: 1em;
+                    .pointer {
+                        width: 14px;
+                        height: 14px;
+                        border-radius: var(--border-radius);
+                        &.exceptional {
+                            background-color: green;
+                        }
+
+                        &.recommended {
+                            background-color: #009292;
+                        }
+
+                        &.meh {
+                            background-color: orange;
+                        }
+
+                        &.skip {
+                            background-color: red;
+                        }
+                    }
+
+                    &.active, &:hover {
+                        border: 2px solid var(--clr-primary)
+                    }
+                }
+            }
+        }
+    }
+
+    app-game-screenshots {
+        width: 40%;
+        margin-top: 4em;
     }
 }

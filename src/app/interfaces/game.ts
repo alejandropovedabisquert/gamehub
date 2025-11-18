@@ -19,7 +19,7 @@ export interface GameResult {
     reviews_text_count: string;
     added: number;
     added_by_status: Record<string, unknown>;
-    metacritic: number;
+    metacritic: number | null;
     playtime: number;
     suggestions_count: number;
     updated: string;

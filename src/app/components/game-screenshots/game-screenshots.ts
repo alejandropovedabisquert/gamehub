@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { GameService } from '../../services/GameService/game-service';
 import { ActivatedRoute } from '@angular/router';
 import { AsyncPipe, SlicePipe } from '@angular/common';
@@ -11,21 +11,62 @@ import { Observable } from 'rxjs';
   templateUrl: './game-screenshots.html',
   styleUrl: './game-screenshots.scss',
 })
-// TODO: Implementar carrusel de imágenes
-export class GameScreenshots implements OnInit {
-  @Input() principalImage!: string ;
+export class GameScreenshots implements OnInit, OnDestroy {
+  @Input() principalImage!: string;
   private gameService: GameService = inject(GameService);
   private route: ActivatedRoute = inject(ActivatedRoute);
   gameScreenshots$: Observable<ScreenshotResponse>;
+  allImages: string[] = [];
+  isModalOpen = false;
+  selectedIndex = 0;
 
   constructor() {
     this.gameScreenshots$ = new Observable<ScreenshotResponse>();
+    console.log(this.principalImage);
+    
   }
 
   ngOnInit(): void {
     this.gameScreenshots$ = this.gameService.getGameScreenshots(this.route.snapshot.params['slug']);
     this.gameScreenshots$.subscribe((data) => {
-      console.log('Game Screenshots:', data);
+      this.allImages = [this.principalImage];
+      this.allImages = this.allImages.concat(data.results.map(screenshot => screenshot.image));
     });
+  }
+
+  private clampIndex(i: number) {
+    const len = this.allImages?.length || 0;
+    if (len === 0) return 0;
+    return (i + len) % len;
+  }
+
+  close() {
+    this.isModalOpen = false;
+    document.body.style.overflow = '';
+  }
+
+  prev() {
+    if (!this.allImages || this.allImages.length === 0) return;
+    this.selectedIndex = this.clampIndex(this.selectedIndex - 1);
+  }
+
+  next() {
+    if (!this.allImages || this.allImages.length === 0) return;
+    this.selectedIndex = this.clampIndex(this.selectedIndex + 1);
+  }
+
+  get selectedImage(): string | null {
+    return this.allImages && this.allImages.length ? this.allImages[this.selectedIndex] : null;
+  }
+  
+  open(index: number) {
+    if (!this.allImages || this.allImages.length === 0) return;
+    this.selectedIndex = this.clampIndex(index);
+    this.isModalOpen = true;
+    document.body.style.overflow = 'hidden';
+  }
+
+  ngOnDestroy() {
+    document.body.style.overflow = '';
   }
 }

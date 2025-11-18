@@ -26,6 +26,13 @@ interface GamePlatform {
   requirements: PlatformRequirement;
 }
 
+interface GameRating {
+  count: number;
+  id: number;
+  percent: number;
+  title: string;
+}
+
 export interface GameDetailInterface {
   id: number;
   slug: string;
@@ -42,7 +49,7 @@ export interface GameDetailInterface {
   website: string;
   rating: number;
   rating_top: number;
-  ratings: Record<string, unknown>;
+  ratings: GameRating[];
   reactions: Record<string, unknown>;
   added: number;
   added_by_status: Record<string, unknown>;

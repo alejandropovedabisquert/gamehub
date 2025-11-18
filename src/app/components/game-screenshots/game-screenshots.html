@@ -1,22 +1,42 @@
 @if (gameScreenshots$ | async; as shot) {
-  <div class="screenshots">
-    <div class="screenshot principal">
-      <img [src]="principalImage" alt="Principal Screenshot" />
-    </div>
-    @if (shot.results.length > 0) {
-        @for (item of (shot.results | slice:0:4); track item.id) {
-          <div class="screenshot">
-            <img [src]="item.image" [alt]="item.id" />
-          </div>
-        }
-    }
-    @else {
-      <p>No hay capturas disponibles.</p>
+<div class="screenshots">
+  @if (allImages.length > 0) {
+  @for (item of (allImages | slice:0:5); let i = $index; track i; let isLast = $last) {
+  <div class="screenshot">
+    @if(isLast){
+      <div class="more-screenshots" tabindex="0" (click)="open(i)" (keyup.enter)="open(i)">
+        <img [src]="item" [alt]="'Screenshot ' + (i + 1)" loading="lazy" tabindex="0" (click)="open(i)"
+        (keyup.enter)="open(i)" />
+        <span>+{{ allImages.length - 5 }}</span>
+      </div>
+    } 
+    @else{
+      <img [src]="item" [alt]="'Screenshot ' + (i + 1)" loading="lazy" tabindex="0" (click)="open(i)"
+        (keyup.enter)="open(i)" />
     }
   </div>
+  }
+  }
+  @else {
+  <p>No hay capturas disponibles.</p>
+  }
+</div>
+@if(isModalOpen) {
+<div class="overlay" role="dialog" aria-modal="true" (click)="close()" tabindex="0" (keyup.escape)="close()" (keyup.arrowright)="next()" (keyup.arrowleft)="prev()">
+  <div class="modal" (click)="$event.stopPropagation()" tabindex="0" (keyup.enter)="$event.stopPropagation()">
+    <button class="close" (click)="close()" aria-label="Close gallery">✕</button>
+    <button class="nav prev" (click)="prev()" aria-label="Previous image">‹</button>
+    <div class="image-wrap">
+      <img [src]="selectedImage" [alt]="'Screenshot ' + (selectedIndex + 1)" />
+      <div class="counter">{{ selectedIndex + 1 }} / {{ allImages.length || 0 }}</div>
+    </div>
+    <button class="nav next" (click)="next()" aria-label="Next image">›</button>
+  </div>
+</div>
+}
 }
 @else {
-  <div class="loading">
-    <p>Cargando capturas...</p>
-  </div>
+<div class="loading">
+  <p>Cargando capturas...</p>
+</div>
 }

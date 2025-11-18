@@ -6,6 +6,7 @@
 
     .screenshot {
         transition: all 0.3s ease;
+        cursor: pointer;
         &:first-child {
             grid-column: span 2 / span 2;
             grid-row: span 2 / span 2;
@@ -13,6 +14,11 @@
 
         &:hover {
             transform: scale(1.02);
+            .more-screenshots{
+                &::after {
+                    background: rgba(0, 0, 0, 0.3);
+                }
+            }
         }
 
         img {
@@ -21,6 +27,108 @@
             border-radius: var(--border-radius);
             display: block;
             object-fit: cover;
+        }
+
+        .more-screenshots {
+            position: relative;
+            overflow: hidden;
+            &::after {
+                transition: all 0.3s ease;
+                content: "";
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                background: rgba(0, 0, 0, 0.6);
+                color: #fff;
+                border-radius: var(--border-radius);
+                font-size: 0.9rem;
+            }
+            span{
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-size: 22px;
+                z-index: 1;
+                font-weight: bold;
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+/* Modal styles */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 24px;
+
+    .modal {
+        position: relative;
+        max-width: 95%;
+        max-height: 95%;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        .image-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 100%;
+            max-height: 100%;
+
+            img {
+                max-width: calc(100vw - 160px);
+                max-height: calc(100vh - 160px);
+                border-radius: var(--border-radius);
+                box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+                object-fit: contain;
+            }
+
+            .counter {
+                margin-top: 8px;
+                color: #fff;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Controls */
+        .close {
+            position: absolute;
+            top: -12px;
+            right: -12px;
+            background: #222;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav {
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 36px;
+            cursor: pointer;
+            padding: 8px;
+            user-select: none;
+        }
+
+        .nav:focus,
+        .close:focus {
+            outline: 2px solid rgba(255, 255, 255, 0.2);
+            outline-offset: 4px;
         }
     }
 }

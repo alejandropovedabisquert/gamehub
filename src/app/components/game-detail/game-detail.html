@@ -2,9 +2,28 @@
 <div class="game-detail">
     <div class="game-content">
         <div class="title">
-            <h2>{{ gameDetail.name }}</h2>
+            <h1>{{ gameDetail.name }}</h1>
+        </div>
+        <div class="game-distribution-rating">
+            <div class="graph-rating">
+                @for(rating of gameDetail.ratings; track rating){
+                    <div [className]="'graph-section ' + rating.title" [id]="'graph-'+rating.title" [style.width.%]="rating.percent" (mouseenter)="hoverOnGraph('rating-'+rating.title)" (mouseleave)="leaveGraph('rating-'+rating.title)"></div>
+                }
+            </div>
+            <div class="ratings-text">
+                @for(rating of gameDetail.ratings; track rating){
+                    <div [className]="'rating ' + rating.title" [id]="'rating-'+rating.title" (mouseenter)="hoverOnGraph('graph-'+rating.title)" (mouseleave)="leaveGraph('graph-'+rating.title)">
+                        <div [className]="'pointer ' + rating.title"></div>
+                        <strong>
+                            {{rating.title}}
+                        </strong>
+                        {{ rating.count }}
+                    </div>
+                }
+            </div>
         </div>
         <div class="description">
+            <h2>About</h2>
             <p [innerHTML]="gameDetail.description"></p>
         </div>
     </div>
