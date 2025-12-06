@@ -8,7 +8,6 @@ import { SidebarFilters } from '../sidebar-filters/sidebar-filters';
   templateUrl: './games.html',
   styleUrl: './games.scss',
 })
-// TODO: Revisar porque algunas veces la vista no detecta el cambio del fetch en game-list y sidebar-filters, hace que se quedem en pantalla los esqueletos
 export class Games {
   // eslint-disable-next-line
   filters: any = null;
