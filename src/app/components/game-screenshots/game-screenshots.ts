@@ -19,8 +19,10 @@ export class GameScreenshots implements OnInit, OnDestroy {
   allImages: string[] = [];
   isModalOpen = false;
   selectedIndex = 0;
+  skeletonArray: any[] = [];
 
   constructor() {
+    this.skeletonArray = Array(5).fill(0);
     this.gameScreenshots$ = new Observable<ScreenshotResponse>();
     console.log(this.principalImage);
     
@@ -29,7 +31,9 @@ export class GameScreenshots implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.gameScreenshots$ = this.gameService.getGameScreenshots(this.route.snapshot.params['slug']);
     this.gameScreenshots$.subscribe((data) => {
-      this.allImages = [this.principalImage];
+      if (this.principalImage) {
+        this.allImages = [this.principalImage];
+      }
       this.allImages = this.allImages.concat(data.results.map(screenshot => screenshot.image));
     });
   }

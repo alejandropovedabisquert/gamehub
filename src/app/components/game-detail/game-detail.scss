@@ -59,6 +59,7 @@
                 width: fit-content;
                 margin-top: 1em;
                 gap: 1em;
+
                 .rating {
                     display: flex;
                     text-transform: capitalize;
@@ -70,10 +71,12 @@
                     border: 2px solid transparent;
                     border-radius: var(--border-radius);
                     gap: 1em;
+
                     .pointer {
                         width: 14px;
                         height: 14px;
                         border-radius: var(--border-radius);
+
                         &.exceptional {
                             background-color: green;
                         }
@@ -91,7 +94,8 @@
                         }
                     }
 
-                    &.active, &:hover {
+                    &.active,
+                    &:hover {
                         border: 2px solid var(--clr-primary)
                     }
                 }
@@ -103,4 +107,123 @@
         width: 40%;
         margin-top: 4em;
     }
+}
+
+.skeleton-game-detail {
+    display: flex;
+    gap: 40px;
+
+    .skeleton-game-content {
+        width: 60%;
+
+        .skeleton-title {
+            width: 100%;
+            max-width: 800px;
+            height: 40px;
+            background-color: grey;
+            border-radius: var(--border-radius);
+            animation: pulse 1.5s infinite;
+            margin: 4em 0;
+        }
+
+        .skeleton-game-distribution-rating {
+            margin-bottom: 2em;
+
+            .skeleton-graph-rating {
+                width: 100%;
+                height: 40px;
+                background-color: grey;
+                border-radius: var(--border-radius);
+                animation: pulse 1.5s infinite;
+
+                .skeleton-graph-section {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+
+            .skeleton-ratings-text {
+                display: flex;
+                flex-wrap: wrap;
+                width: fit-content;
+                margin-top: 1em;
+                gap: 1em;
+
+                .skeleton-rating {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: .5em 1em;
+                    gap: 1em;
+
+                    .skeleton-pointer {
+                        width: 14px;
+                        height: 14px;
+                        background-color: grey;
+                        border-radius: var(--border-radius);
+                        animation: pulse 1.5s infinite;
+                    }
+
+                    div {
+                        width: 100px;
+                        height: 20px;
+                        background-color: grey;
+                        border-radius: var(--border-radius);
+                        animation: pulse 1.5s infinite;
+                    }
+                }
+            }
+        }
+
+        .skeleton-description {
+            width: 100%;
+
+            div {
+                &:first-child {
+                    max-width: 100px;
+                    height: 20px;
+                }
+
+                width: 100%;
+                height: 20px;
+                background-color: grey;
+                border-radius: var(--border-radius);
+                animation: pulse 1.5s infinite;
+                margin-bottom: 1em;
+            }
+        }
+    }
+
+    .skeleton-app-game-screenshots {
+        width: 40%;
+        margin-top: 4em;
+        .skeleton-screenshots {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+
+            .skeleton-screenshot {
+                width: 100%;
+                height: 100%;
+                grid-column: span 1/span 1;
+                grid-row: span 2/span 2;
+                max-height: 195px;
+                overflow: hidden;
+                border-radius: var(--border-radius);
+                &:first-child {
+                    grid-column: span 2 / span 2;
+                    grid-row: span 2 / span 2;
+                    max-height: 400px;
+                }
+                div {
+                    width: 100%;
+                    height: 100vh;
+                    background-color: grey;
+                    border-radius: var(--border-radius);
+                    animation: pulse 1.5s infinite;
+                }
+            }
+        }
+    }
+
 }

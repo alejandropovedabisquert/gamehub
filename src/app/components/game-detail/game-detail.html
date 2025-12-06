@@ -4,34 +4,73 @@
         <div class="title">
             <h1>{{ gameDetail.name }}</h1>
         </div>
+        @if(gameDetail.ratings.length > 0){
         <div class="game-distribution-rating">
             <div class="graph-rating">
                 @for(rating of gameDetail.ratings; track rating){
-                    <div [className]="'graph-section ' + rating.title" [id]="'graph-'+rating.title" [style.width.%]="rating.percent" (mouseenter)="hoverOnGraph('rating-'+rating.title)" (mouseleave)="leaveGraph('rating-'+rating.title)"></div>
+                <div [className]="'graph-section ' + rating.title" [id]="'graph-'+rating.title"
+                    [style.width.%]="rating.percent" (mouseenter)="hoverOnGraph('rating-'+rating.title)"
+                    (mouseleave)="leaveGraph('rating-'+rating.title)"></div>
                 }
             </div>
             <div class="ratings-text">
                 @for(rating of gameDetail.ratings; track rating){
-                    <div [className]="'rating ' + rating.title" [id]="'rating-'+rating.title" (mouseenter)="hoverOnGraph('graph-'+rating.title)" (mouseleave)="leaveGraph('graph-'+rating.title)">
-                        <div [className]="'pointer ' + rating.title"></div>
-                        <strong>
-                            {{rating.title}}
-                        </strong>
-                        {{ rating.count }}
-                    </div>
+                <div [className]="'rating ' + rating.title" [id]="'rating-'+rating.title"
+                    (mouseenter)="hoverOnGraph('graph-'+rating.title)" (mouseleave)="leaveGraph('graph-'+rating.title)">
+                    <div [className]="'pointer ' + rating.title"></div>
+                    <strong>
+                        {{rating.title}}
+                    </strong>
+                    {{ rating.count }}
+                </div>
                 }
             </div>
         </div>
-        <div class="description">
-            <h2>About</h2>
-            <p [innerHTML]="gameDetail.description"></p>
-        </div>
+        }
+        @if (gameDetail.description) {
+            <div class="description">
+                <h2>About</h2>
+                <p [innerHTML]="gameDetail.description"></p>
+            </div>
+        }
     </div>
     <app-game-screenshots [principalImage]="gameDetail.background_image"></app-game-screenshots>
 </div>
 }
 @else {
-<div class="loading">
-    <p>Cargando detalles del juego...</p>
+<div class="loading skeleton-game-detail">
+    <div class="skeleton-game-content">
+        <div class="skeleton-title">
+            <div></div>
+        </div>
+        <div class="skeleton-game-distribution-rating">
+            <div class="skeleton-graph-rating">
+                <div class="skeleton-graph-section"></div>
+            </div>
+            <div class="skeleton-ratings-text">
+                @for(skeleton of skeletonArray; track skeleton){
+                    <div class="skeleton-rating">
+                        <div class="skeleton-pointer"></div>
+                        <div></div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="skeleton-description">
+            @for(skeleton of skeletonArray; track skeleton){
+                <div></div>
+                <div></div>
+            }
+        </div>
+    </div>
+    <div class="skeleton-app-game-screenshots">
+        <div class="skeleton-screenshots">
+            @for(skeleton of skeletonArray; track skeleton){
+                <div class="skeleton-screenshot">
+                    <div></div>
+                </div>
+            }
+        </div>
+    </div>
 </div>
 }

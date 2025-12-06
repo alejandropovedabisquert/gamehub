@@ -15,9 +15,11 @@ import { AsyncPipe } from '@angular/common';
 export class GameDetail implements OnInit {
   private gameService: GameService = inject(GameService);
   private route: ActivatedRoute = inject(ActivatedRoute);
+  skeletonArray: any[] = [];
   gameDetails$!: Observable<GameDetailInterface>;
 
   constructor() {
+    this.skeletonArray = Array(5).fill(0);
     this.gameDetails$ = new Observable<GameDetailInterface>();
   }
 

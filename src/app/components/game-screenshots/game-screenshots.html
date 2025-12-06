@@ -18,7 +18,7 @@
   }
   }
   @else {
-  <p>No hay capturas disponibles.</p>
+  <p>There are no screenshots available.</p>
   }
 </div>
 @if(isModalOpen) {
@@ -36,7 +36,11 @@
 }
 }
 @else {
-<div class="loading">
-  <p>Cargando capturas...</p>
+<div class="loading skeleton-screenshots">
+    @for(skeleton of skeletonArray; track skeleton){
+        <div class="skeleton-screenshot">
+            <div></div>
+        </div>
+    }
 </div>
 }
