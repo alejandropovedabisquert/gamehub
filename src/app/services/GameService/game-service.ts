@@ -26,7 +26,6 @@ export class GameService {
   // eslint-disable-next-line
   getGames(filters?: any): Observable<Game> {
     // When filters are provided, construct the query parameters
-    // console.log('getGames called without filters:', filters?.nextPage);
     if (filters?.nextPage) {
       return this.http.get<Game>(filters.nextPage).pipe(delay(1000));
     }
@@ -44,7 +43,6 @@ export class GameService {
     }
 
     const url = `${this.baseUrl}/games`;
-    // console.log('Fetching games:', url + '?' + params.toString());
     return this.http.get<Game>(url, { params }).pipe(delay(1000));
   }
 

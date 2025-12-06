@@ -115,7 +115,6 @@ export class GameList implements AfterViewInit, OnDestroy, OnChanges {
       next: (games: Game) => {
         const current = this.resultsSubject.value;
         this.resultsSubject.next([...current, ...games.results]);
-        console.log(this.resultsSubject.value);
         this.next = games.next;
         this.isLoadingSubject.next(false); // Marcar como cargado
       },

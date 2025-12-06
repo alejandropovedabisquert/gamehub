@@ -24,7 +24,6 @@ export class GameScreenshots implements OnInit, OnDestroy {
   constructor() {
     this.skeletonArray = Array(5).fill(0);
     this.gameScreenshots$ = new Observable<ScreenshotResponse>();
-    console.log(this.principalImage);
     
   }
 
