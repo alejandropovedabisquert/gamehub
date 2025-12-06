@@ -227,3 +227,30 @@
     }
 
 }
+
+@media (max-width: 991px) {
+    .game-detail, .skeleton-game-detail {
+        flex-direction: column;
+
+        .game-content, .skeleton-game-content,
+        app-game-screenshots, .skeleton-app-game-screenshots {
+            width: 100%;
+        }
+
+        app-game-screenshots, .skeleton-app-game-screenshots {
+            margin-top: 2em;
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    .game-detail {
+        .game-content{
+            .title {
+                h1 {
+                    font-size: 32px;
+                }
+            }
+        }
+    }
+}
