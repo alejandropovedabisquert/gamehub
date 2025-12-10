@@ -1,59 +1,52 @@
-# Gamehub
+# 🎮 GameHub
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.5.
+Una aplicación web que creé para probar la nueva version de Angular 20 y y también utiliza la API de RAWG. 
 
-## Development server
+## 🌐 Demo
 
-To start a local development server, run:
+🔗 [https://gamehub-three-lime. vercel.app](https://gamehub-three-lime.vercel.app)
 
-```bash
-ng serve
-```
+## 📋 Descripción
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+GameHub es una web que permite a los usuarios explorar una amplia colección de videojuegos, filtrarlos por género y plataforma, buscar títulos específicos y ver información detallada de cada juego, incluyendo capturas de pantalla y estadísticas.
 
-## Code scaffolding
+## ✨ Características
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- **🔍 Búsqueda Inteligente**: Sistema de búsqueda con debounce para encontrar juegos en tiempo real
+- **🎯 Filtros Avanzados**: Filtra juegos por: 
+  - Géneros (Action, RPG, Adventure, etc.)
+  - Plataformas (PlayStation, Xbox, PC, Nintendo, etc.)
+- **📊 Información Detallada**: Visualiza información completa de cada juego: 
+  - Descripción
+  - Calificaciones y puntuaciones Metacritic
+  - Fecha de lanzamiento
+  - Plataformas disponibles
+  - Estadísticas de popularidad
+- **🖼️ Galería de Imágenes**:  Visualizador de capturas de pantalla con modal interactivo
+- **📱 Diseño Responsive**: Interfaz adaptable a todos los dispositivos
+- **♾️ Scroll Infinito**: Carga progresiva de juegos al hacer scroll
+- **⚡ Rendimiento Optimizado**: 
+  - Zoneless Change Detection
+  - Lazy Loading de componentes
+  - Skeleton loaders para mejor UX
 
-```bash
-ng generate component component-name
-```
+## 🛠️ Tecnologías
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+- **Framework**: Angular 20
+- **Lenguajes**: 
+  - TypeScript
+  - SCSS
+  - HTML
+- **API**: [RAWG Video Games Database API](https://rawg.io/apidocs)
+- **Características de Angular**:
+  - Standalone Components
+  - Signals y Zoneless
+  - Reactive Forms
+  - HttpClient
+  - Router con lazy loading
 
-```bash
-ng generate --help
-```
+## 👨‍💻 Autor
 
-## Building
+**Alejandro Poveda Bisquert**
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- GitHub: [@alejandropovedabisquert](https://github.com/alejandropovedabisquert)
